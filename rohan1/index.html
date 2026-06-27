@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ✅ SEO -->
+<title>Luxury Villas in Lonavala & Khandala | Private Pool Villas | VaishnaviStays</title>
+
+<meta name="description" content="Book luxury villas in Lonavala & Khandala with private pool, mountain view, AC rooms, and premium amenities. Best villas for family, parties, and weekend stay near Mumbai & Pune.">
+
+<meta name="keywords" content="Lonavala villa, Khandala villa, villa with private pool, luxury villa Lonavala, villa booking India, weekend villa near Mumbai">
+
+<meta name="robots" content="index, follow">
+
+<!-- Canonical URL -->
+<link rel="canonical" href="https://vaishnavistays.netlify.app/">
+
+<!-- Google verification -->
+<meta name="google-site-verification" content="3MtQ7zPcXsZFa49aT6zNfIU-rexAqFXiJ9Jd2BXLzgg">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Luxury Villas in Lonavala | VaishnaviStays">
+<meta property="og:description" content="Book premium villas with private pool in Lonavala & Khandala">
+<meta property="og:type" content="website">
+<meta property="og:image" content="images/lonavala villa.jpg">
+
+<!-- Schema (VERY IMPORTANT FOR GOOGLE RANKING) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LodgingBusiness",
+  "name": "VaishnaviStays",
+  "description": "Luxury villa rentals in Lonavala and Khandala with private pool and premium amenities.",
+  "telephone": "+91 9209177383",
+  "areaServed": ["Lonavala", "Khandala", "Mumbai", "Pune"]
+}
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+html{scroll-behavior:smooth;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#0f172a;color:white;}
+
+/* NAV */
+nav{
+display:flex;
+justify-content:space-between;
+padding:20px;
+background:#020617;
+position:fixed;
+width:100%;
+z-index:1000;
+}
+nav h2{color:#22c55e}
+
+/* HERO */
+.hero{
+height:100vh;
+background:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c') center/cover;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+position:relative;
+}
+.hero::after{
+content:'';
+position:absolute;
+width:100%;height:100%;
+background:rgba(0,0,0,0.6);
+}
+.hero-content{position:relative;z-index:2;}
+.hero h1{font-size:40px;}
+.hero p{margin-top:10px;color:#cbd5f5}
+
+/* SECTIONS */
+.section{padding:80px 20px;text-align:center;}
+.section h2{margin-bottom:10px;}
+.underline{
+width:80px;
+height:3px;
+background:#22c55e;
+margin:10px auto 30px;
+}
+
+/* VILLAS */
+.villas{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:20px;
+}
+.card{
+background:#1e293b;
+border-radius:10px;
+overflow:hidden;
+cursor:pointer;
+transition:0.3s;
+}
+.card:hover{transform:scale(1.05);}
+.card img{width:100%;height:200px;object-fit:cover;}
+.card-content{padding:15px;}
+.card-content p{font-size:14px;color:#cbd5f5}
+
+/* FEATURES */
+.features{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+.feature-box{
+background:#1e293b;
+padding:20px;
+border-radius:10px;
+}
+
+/* CONTACT */
+.contact p{margin:10px 0;color:#cbd5f5}
+
+/* FOOTER */
+footer{
+background:#020617;
+padding:20px;
+text-align:center;
+margin-top:40px;
+color:#94a3b8;
+}
+
+/* MODAL */
+.modal{
+display:none;
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+background:rgba(0,0,0,0.8);
+justify-content:center;
+align-items:center;
+z-index:2000;
+}
+.modal-box{
+background:#1e293b;
+padding:20px;
+border-radius:10px;
+width:90%;
+max-width:400px;
+}
+.modal-box input{
+width:100%;
+padding:10px;
+margin:10px 0;
+border:none;
+border-radius:5px;
+}
+.btn{
+background:#22c55e;
+padding:10px;
+border:none;
+width:100%;
+border-radius:5px;
+color:white;
+cursor:pointer;
+}
+.close{float:right;cursor:pointer;}
+
+/* WHATSAPP */
+.whatsapp{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#22c55e;
+padding:15px;
+border-radius:50%;
+font-size:20px;
+}
+</style>
+
+</head>
+
+<body>
+
+<nav>
+<h2>VaishnaviStays</h2>
+</nav>
+
+<div class="hero">
+<div class="hero-content">
+<h1>Luxury Villa Rentals in Lonavala & Khandala</h1>
+<p>Private pool villas, premium stay, family & party friendly cottages near Mumbai & Pune</p>
+</div>
+</div>
+
+<!-- VILLAS -->
+<div class="section">
+<h2>Best Luxury Villas in Lonavala</h2>
+<div class="underline"></div>
+<div class="villas" id="villaContainer"></div>
+</div>
+
+<!-- FEATURES -->
+<div class="section">
+<h2>Why Choose VaishnaviStays</h2>
+<div class="underline"></div>
+<div class="features">
+<div class="feature-box">🏡 Luxury Private Pool Villas</div>
+<div class="feature-box">💦 Premium Amenities</div>
+<div class="feature-box">🎉 Perfect for Parties</div>
+<div class="feature-box">🌄 Mountain View Locations</div>
+</div>
+</div>
+
+<!-- CONTACT -->
+<div class="section contact">
+<h2>Contact Us</h2>
+<div class="underline"></div>
+<p>📞 +91 9209177383</p>
+<p>📍 Lonavala & Khandala</p>
+<p>💬 WhatsApp Booking Available</p>
+</div>
+
+<footer>
+© 2026 VaishnaviStays | Luxury Villa Rentals India
+</footer>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+<div class="modal-box">
+<span class="close" onclick="closeModal()">✖</span>
+
+<h3 id="villaTitle"></h3>
+<p id="villaDesc"></p>
+
+<form onsubmit="sendBooking(event)">
+<input type="text" id="name" placeholder="Your Name" required>
+
+<label>Check-in Date</label>
+<input type="date" id="entry" required>
+
+<label>Check-out Date</label>
+<input type="date" id="exit" required>
+
+<input type="tel" id="phone" placeholder="Phone Number" required>
+
+<button class="btn">Send via WhatsApp</button>
+</form>
+
+</div>
+</div>
+
+<a class="whatsapp" href="https://wa.me/919209177383">💬</a>
+
+<script>
+let villas = [
+"Luxury 4BHK villa with private pool & rain dance",
+"Premium villa with modern interiors",
+"Peaceful villa with terrace view",
+"5-star villa with large pool",
+"Spacious villa with garden",
+"Villa with bonfire setup",
+"Nature view relaxing villa"
+];
+
+let villaNames = [
+"Lonavala Villa",
+"Nayak Villa",
+"Muscut House",
+"Khandala Villa",
+"Captain Villa 7",
+"Captain Villa 8",
+"Captain Villa 10"
+];
+
+let villaImages = [
+"images/lonavala villa.jpg",
+"images/villa2.jpg",
+"images/villa3.jpg",
+"images/villa4.jpg",
+"images/villa5.jpg",
+"images/villa6.jpg",
+"images/villa7.jpg"
+];
+
+let container = document.getElementById("villaContainer");
+
+for(let i=0;i<7;i++){
+container.innerHTML += `
+<div class="card" onclick="openModal(${i})">
+<img src="${villaImages[i]}">
+<div class="card-content">
+<h3>${villaNames[i]}</h3>
+<p>${villas[i]}</p>
+</div>
+</div>`;
+}
+
+function openModal(i){
+document.getElementById("modal").style.display="flex";
+document.getElementById("villaTitle").innerText=villaNames[i];
+document.getElementById("villaDesc").innerText=villas[i];
+}
+
+function closeModal(){
+document.getElementById("modal").style.display="none";
+}
+
+function sendBooking(e){
+e.preventDefault();
+
+let name=document.getElementById("name").value;
+let entry=document.getElementById("entry").value;
+let exit=document.getElementById("exit").value;
+let phone=document.getElementById("phone").value;
+
+let msg=`Booking:%0A Villa:${document.getElementById("villaTitle").innerText}%0A Name:${name}%0A Check-in:${entry}%0A Check-out:${exit}%0A Phone:${phone}`;
+
+window.open(`https://wa.me/919209177383?text=${msg}`,"_blank");
+}
+</script>
+
+</body>
+</html>
