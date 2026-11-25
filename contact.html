@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Contact & Reservations | VaishnaviStays</title>
   <meta name="description" content="Contact VaishnaviStays to book private pool villas in Lonavala & Khandala. Call or WhatsApp +91 9767674307 for availability and direct tariffs.">
   <meta name="robots" content="index, follow">
@@ -40,6 +40,8 @@
     }
   }
   </script>
+  <script defer src="js/data.js"></script>
+  <script defer src="js/main.js"></script>
 </head><body>
   <a href="#mainContent" class="skip-link">Skip to main content</a>
 
@@ -150,7 +152,7 @@
           <div class="form-card">
             <span class="eyebrow">Direct Enquiry Form</span>
             <h2 class="form-card__title">Send Your Stay Details</h2>
-            <p class="form-card__subtitle">Submit your dates below or continue directly on WhatsApp.</p>
+            <p class="form-card__subtitle">Submit your dates to check availability. An enquiry is not a confirmed booking until confirmed by our desk (+91 9767674307).</p>
 
             <form id="contactPageForm" name="villa-enquiry" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
               <input type="hidden" name="form-name" value="villa-enquiry">
@@ -165,7 +167,7 @@
                 </div>
                 <div class="field">
                   <label for="contactPhone">Mobile Number *</label>
-                  <input id="contactPhone" name="phone" type="tel" class="input" placeholder="10-digit mobile number" required autocomplete="tel">
+                  <input id="contactPhone" name="phone" type="tel" class="input" placeholder="10-digit mobile number" required autocomplete="tel" inputmode="tel">
                 </div>
               </div>
 
@@ -189,20 +191,26 @@
                   </select>
                 </div>
                 <div class="field">
-                  <label for="contactCheckIn">Check-in Date</label>
-                  <input id="contactCheckIn" name="checkin" type="date" class="input">
+                  <label for="contactGuests">Number of Guests</label>
+                  <select id="contactGuests" name="guests" class="input">
+                    <option value="4-6 Guests">4 - 6 Guests</option>
+                    <option value="7-10 Guests">7 - 10 Guests</option>
+                    <option value="11-15 Guests" selected>11 - 15 Guests</option>
+                    <option value="16-20 Guests">16 - 20 Guests</option>
+                    <option value="20+ Guests">20+ Guests</option>
+                  </select>
                 </div>
               </div>
 
-              <div class="field">
-                <label for="contactGuests">Number of Guests</label>
-                <select id="contactGuests" name="guests" class="input">
-                  <option value="4-6 Guests">4 - 6 Guests</option>
-                  <option value="7-10 Guests">7 - 10 Guests</option>
-                  <option value="11-15 Guests" selected>11 - 15 Guests</option>
-                  <option value="16-20 Guests">16 - 20 Guests</option>
-                  <option value="20+ Guests">20+ Guests</option>
-                </select>
+              <div class="field-row">
+                <div class="field">
+                  <label for="contactCheckIn">Check-in Date</label>
+                  <input id="contactCheckIn" name="checkin" type="date" class="input">
+                </div>
+                <div class="field">
+                  <label for="contactCheckOut">Check-out Date</label>
+                  <input id="contactCheckOut" name="checkout" type="date" class="input">
+                </div>
               </div>
 
               <div class="field">
@@ -294,8 +302,5 @@
   <button type="button" class="back-to-top" aria-label="Back to top">
     <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
   </button>
-
-  <script src="js/data.js"></script>
-  <script src="js/main.js"></script>
 </body>
 </html>

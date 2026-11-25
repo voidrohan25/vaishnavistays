@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Photo Gallery | VaishnaviStays Lonavala & Khandala</title>
   <meta name="description" content="View real photographs of VaishnaviStays villas—private swimming pools, classic architecture, indoor lounges, dining kitchens, and mountain views. Call +91 9767674307.">
   <meta name="robots" content="index, follow">
@@ -34,6 +34,8 @@
     "url": "https://vaishnavistays.netlify.app/gallery.html"
   }
   </script>
+  <script defer src="js/data.js"></script>
+  <script defer src="js/main.js"></script>
 </head><body>
   <a href="#mainContent" class="skip-link">Skip to main content</a>
 
@@ -114,6 +116,7 @@
           <button type="button" class="filter-btn gallery-filter-btn" data-category="interiors" aria-pressed="false">Interiors</button>
           <button type="button" class="filter-btn gallery-filter-btn" data-category="views" aria-pressed="false">Hill Views</button>
         </div>
+        <p id="galleryStatus" class="sr-only" aria-live="polite"></p>
         <div class="gallery-grid" id="galleryGrid"></div>
       </div>
     </section>
@@ -203,8 +206,5 @@
   <button type="button" class="back-to-top" aria-label="Back to top">
     <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
   </button>
-
-  <script src="js/data.js"></script>
-  <script src="js/main.js"></script>
 </body>
 </html>

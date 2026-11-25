@@ -45,7 +45,8 @@ function initDateConstraints() {
   const pairs = [
     ["searchCheckIn", "searchCheckOut"],
     ["modalCheckIn", "modalCheckOut"],
-    ["detailCheckIn", "detailCheckOut"]
+    ["detailCheckIn", "detailCheckOut"],
+    ["contactCheckIn", "contactCheckOut"]
   ];
 
   pairs.forEach(([inId, outId]) => {
@@ -90,6 +91,7 @@ function hideFormAlert(el) {
 
 function renderPictureHtml(item, className, altText, eager = false) {
   const loadingAttr = eager ? "eager" : "lazy";
+  const priorityAttr = eager ? ' fetchpriority="high"' : "";
   return `
     <picture>
       <source srcset="${escapeHtml(item.webp)}" type="image/webp">
@@ -99,7 +101,7 @@ function renderPictureHtml(item, className, altText, eager = false) {
         width="${item.width}"
         height="${item.height}"
         class="${escapeHtml(className)}"
-        loading="${loadingAttr}"
+        loading="${loadingAttr}"${priorityAttr}
         decoding="async"
       >
     </picture>
@@ -116,6 +118,7 @@ function initNavbar() {
   const backdrop = document.querySelector(".drawer-backdrop");
   const closeBtn = document.querySelector(".drawer-close");
   const links = document.querySelectorAll(".drawer-link");
+  let lastTrigger = null;
 
   if (header) {
     const onScroll = () => {
@@ -125,9 +128,15 @@ function initNavbar() {
     onScroll();
   }
 
+  if (drawer) {
+    drawer.setAttribute("aria-hidden", "true");
+  }
+
   function openDrawer() {
     if (!drawer) return;
+    lastTrigger = document.activeElement;
     drawer.classList.add("is-open");
+    drawer.setAttribute("aria-hidden", "false");
     backdrop && backdrop.classList.add("is-open");
     toggle && toggle.setAttribute("aria-expanded", "true");
     document.body.style.overflow = "hidden";
@@ -137,9 +146,13 @@ function initNavbar() {
   function closeDrawer() {
     if (!drawer) return;
     drawer.classList.remove("is-open");
+    drawer.setAttribute("aria-hidden", "true");
     backdrop && backdrop.classList.remove("is-open");
     toggle && toggle.setAttribute("aria-expanded", "false");
     document.body.style.overflow = "";
+    if (lastTrigger && typeof lastTrigger.focus === "function") {
+      lastTrigger.focus();
+    }
   }
 
   if (toggle) {
@@ -153,7 +166,6 @@ function initNavbar() {
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && drawer && drawer.classList.contains("is-open")) {
       closeDrawer();
-      toggle && toggle.focus();
     }
   });
 }
@@ -179,33 +191,44 @@ function initBackToTop() {
 }
 
 /* --------------------------------------------------------------------------
-   Villas Listing, Filtering & Card Builder
+   Villas Listing, Filtering & Delegated Quick-Enquiry
    -------------------------------------------------------------------------- */
 function initVillas() {
   const grid = document.getElementById("villasGrid");
   const featuredGrid = document.getElementById("featuredVillasGrid");
   const filterBtns = document.querySelectorAll(".filter-btn[data-filter]");
+  const statusEl = document.getElementById("villasStatus");
 
   if (featuredGrid) {
     const featured = [VILLAS_DATA[0], VILLAS_DATA[3], VILLAS_DATA[2]];
-    featuredGrid.innerHTML = featured.map(createVillaCardHtml).join("");
+    featuredGrid.innerHTML = featured.map((v) => createVillaCardHtml(v, false)).join("");
   }
 
   if (grid) {
     const params = new URLSearchParams(window.location.search);
     const initialFilter = params.get("filter") || "all";
-    applyVillaFilter(initialFilter, filterBtns, grid);
+    applyVillaFilter(initialFilter, filterBtns, grid, statusEl);
 
     filterBtns.forEach((btn) => {
       btn.addEventListener("click", () => {
         const filter = btn.getAttribute("data-filter") || "all";
-        applyVillaFilter(filter, filterBtns, grid);
+        applyVillaFilter(filter, filterBtns, grid, statusEl);
       });
     });
   }
+
+  // Event delegation for Quick Enquire buttons (no inline onclick)
+  document.addEventListener("click", (e) => {
+    const trigger = e.target.closest("[data-quick-enquiry]");
+    if (!trigger) return;
+    const villaId = Number(trigger.getAttribute("data-quick-enquiry"));
+    if (villaId) {
+      window.openQuickEnquiry(villaId, trigger);
+    }
+  });
 }
 
-function applyVillaFilter(filter, filterBtns, grid) {
+function applyVillaFilter(filter, filterBtns, grid, statusEl) {
   let matched = VILLAS_DATA;
   if (filter !== "all") {
     matched = VILLAS_DATA.filter(
@@ -218,6 +241,10 @@ function applyVillaFilter(filter, filterBtns, grid) {
     btn.classList.toggle("is-active", isMatch);
     btn.setAttribute("aria-pressed", isMatch ? "true" : "false");
   });
+
+  if (statusEl) {
+    statusEl.textContent = `Showing ${matched.length} ${matched.length === 1 ? "villa" : "villas"}.`;
+  }
 
   if (matched.length === 0) {
     grid.innerHTML = `
@@ -232,14 +259,14 @@ function applyVillaFilter(filter, filterBtns, grid) {
     return;
   }
 
-  grid.innerHTML = matched.map(createVillaCardHtml).join("");
+  grid.innerHTML = matched.map((v, idx) => createVillaCardHtml(v, idx === 0)).join("");
 }
 
-function createVillaCardHtml(villa) {
+function createVillaCardHtml(villa, eager = false) {
   return `
     <article class="villa-card" data-id="${villa.id}">
       <a href="villa.html?slug=${encodeURIComponent(villa.slug)}" class="villa-card__media" aria-label="View details for ${escapeHtml(villa.name)}">
-        ${renderPictureHtml(villa, "villa-card__img", `${villa.name} - ${villa.tagline}`)}
+        ${renderPictureHtml(villa, "villa-card__img", `${villa.name} - ${villa.tagline}`, eager)}
         <span class="villa-card__badge">${escapeHtml(villa.badge)}</span>
       </a>
       <div class="villa-card__body">
@@ -260,7 +287,7 @@ function createVillaCardHtml(villa) {
           <a href="villa.html?slug=${encodeURIComponent(villa.slug)}" class="btn btn-outline btn-sm">
             <span>View Villa</span>${ICONS.arrowRight}
           </a>
-          <button type="button" class="btn btn-primary btn-sm" onclick="openQuickEnquiry(${villa.id})">
+          <button type="button" class="btn btn-primary btn-sm" data-quick-enquiry="${villa.id}">
             <span>Enquire</span>
           </button>
         </div>
@@ -298,6 +325,17 @@ function initVillaDetailPage() {
   document.title = `${villa.name} (${villa.highlight}) | VaishnaviStays`;
   const breadcrumbEl = document.getElementById("villaBreadcrumbTitle");
   if (breadcrumbEl) breadcrumbEl.textContent = villa.name;
+
+  const existingPreload = document.head.querySelector("link[data-villa-preload]");
+  if (existingPreload) existingPreload.remove();
+  const preloadLink = document.createElement("link");
+  preloadLink.rel = "preload";
+  preloadLink.as = "image";
+  preloadLink.type = "image/webp";
+  preloadLink.href = villa.webp;
+  preloadLink.setAttribute("fetchpriority", "high");
+  preloadLink.setAttribute("data-villa-preload", "true");
+  document.head.appendChild(preloadLink);
 
   const waUrl = `${SITE_CONFIG.whatsappBase}?text=${encodeURIComponent(
     `Hello VaishnaviStays, I am interested in booking ${villa.name} (${villa.highlight}) in ${villa.location}. Please share availability and tariff.`
@@ -368,9 +406,9 @@ function initVillaDetailPage() {
 
           <aside class="villa-detail__sidebar">
             <div class="form-card">
-              <span class="eyebrow">Direct Reservation Desk</span>
+              <span class="eyebrow">Availability Enquiry</span>
               <h2 class="form-card__title">Enquire for ${escapeHtml(villa.name)}</h2>
-              <p class="form-card__subtitle">Check availability and direct tariff without platform fees.</p>
+              <p class="form-card__subtitle">Submitting an enquiry checks live availability; reservations are confirmed only after direct confirmation from our team.</p>
 
               <form id="villaDetailForm" name="villa-enquiry" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
                 <input type="hidden" name="form-name" value="villa-enquiry">
@@ -386,7 +424,7 @@ function initVillaDetailPage() {
 
                 <div class="field">
                   <label for="detailPhone">Mobile Number *</label>
-                  <input id="detailPhone" name="phone" type="tel" class="input" placeholder="10-digit mobile number" required autocomplete="tel">
+                  <input id="detailPhone" name="phone" type="tel" class="input" placeholder="10-digit mobile number" required autocomplete="tel" inputmode="tel">
                 </div>
 
                 <div class="field">
@@ -457,6 +495,8 @@ function initVillaDetailPage() {
 /* --------------------------------------------------------------------------
    Shared Quick-Enquiry Modal (Injected Once Dynamically)
    -------------------------------------------------------------------------- */
+let lastModalTrigger = null;
+
 function ensureBookingModal() {
   let modal = document.getElementById("bookingModal");
   if (modal) return modal;
@@ -466,12 +506,13 @@ function ensureBookingModal() {
   modal.className = "modal";
   modal.setAttribute("role", "dialog");
   modal.setAttribute("aria-modal", "true");
+  modal.setAttribute("aria-hidden", "true");
   modal.setAttribute("aria-labelledby", "modalVillaTitle");
 
   modal.innerHTML = `
     <div class="modal__box">
       <button type="button" class="modal__close" id="closeModalBtn" aria-label="Close modal">&times;</button>
-      <span class="eyebrow">Direct Enquiry</span>
+      <span class="eyebrow">Availability Enquiry</span>
       <h3 class="modal__title" id="modalVillaTitle">Villa Enquiry</h3>
       <p class="modal__subtitle" id="modalVillaSubtitle"></p>
 
@@ -484,12 +525,12 @@ function ensureBookingModal() {
 
         <div class="field">
           <label for="modalGuestName">Full Name *</label>
-          <input type="text" id="modalGuestName" name="name" class="input" placeholder="Your full name" required>
+          <input type="text" id="modalGuestName" name="name" class="input" placeholder="Your full name" required autocomplete="name">
         </div>
 
         <div class="field">
           <label for="modalGuestPhone">Mobile Number *</label>
-          <input type="tel" id="modalGuestPhone" name="phone" class="input" placeholder="10-digit mobile number" required>
+          <input type="tel" id="modalGuestPhone" name="phone" class="input" placeholder="10-digit mobile number" required autocomplete="tel" inputmode="tel">
         </div>
 
         <div class="field-row">
@@ -533,7 +574,11 @@ function ensureBookingModal() {
 
   const closeModal = () => {
     modal.classList.remove("is-open");
+    modal.setAttribute("aria-hidden", "true");
     document.body.style.overflow = "";
+    if (lastModalTrigger && typeof lastModalTrigger.focus === "function") {
+      lastModalTrigger.focus();
+    }
   };
 
   modal.querySelector("#closeModalBtn").addEventListener("click", closeModal);
@@ -560,18 +605,20 @@ function ensureBookingModal() {
   return modal;
 }
 
-window.openQuickEnquiry = function (villaId) {
+window.openQuickEnquiry = function (villaId, triggerEl = null) {
   const villa = VILLAS_DATA.find((v) => v.id === villaId);
   if (!villa) return;
 
+  lastModalTrigger = triggerEl || document.activeElement;
   const modal = ensureBookingModal();
   hideFormAlert(document.getElementById("modalBookingAlert"));
 
   document.getElementById("modalVillaTitle").textContent = villa.name;
-  document.getElementById("modalVillaSubtitle").textContent = `${villa.highlight} • ${villa.location}`;
+  document.getElementById("modalVillaSubtitle").textContent = `${villa.highlight} • ${villa.location} — Enquiries are confirmed directly by our desk.`;
   document.getElementById("modalVillaNameInput").value = villa.name;
 
   modal.classList.add("is-open");
+  modal.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
   document.getElementById("modalGuestName").focus();
 };
@@ -611,7 +658,7 @@ function initSearchForm() {
 }
 
 /* --------------------------------------------------------------------------
-   Production Form Submission (Validation, Honeypot, Netlify POST + WhatsApp)
+   Production Form Submission (Validation, Duplicate Guard, Netlify + WhatsApp)
    -------------------------------------------------------------------------- */
 function initEnquiryForms() {
   const contactForm = document.getElementById("contactPageForm");
@@ -622,6 +669,7 @@ function initEnquiryForms() {
       emailId: "contactEmail",
       villaSelectId: "contactVillaSelect",
       checkinId: "contactCheckIn",
+      checkoutId: "contactCheckOut",
       guestsId: "contactGuests",
       notesId: "contactMessage",
       alertId: "contactFormAlert"
@@ -646,9 +694,13 @@ function initEnquiryForms() {
 function bindEnquiryForm(form, cfg) {
   const alertEl = document.getElementById(cfg.alertId);
   const submitBtn = form.querySelector('button[type="submit"]');
+  let isSubmitting = false;
+  let lastSubmitKey = "";
+  let lastSubmitTime = 0;
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
+    if (isSubmitting) return;
     hideFormAlert(alertEl);
 
     // Honeypot anti-spam check
@@ -694,20 +746,32 @@ function bindEnquiryForm(form, cfg) {
       return;
     }
 
+    // Duplicate-submission protection (30-second identical payload guard)
+    const submitKey = `${name}|${phone}|${villa}|${checkin}|${checkout}`;
+    const nowMs = Date.now();
+    if (submitKey === lastSubmitKey && nowMs - lastSubmitTime < 30000) {
+      showFormAlert(
+        alertEl,
+        `We already prepared this exact enquiry a moment ago. Call <a href="${SITE_CONFIG.telHref}">${SITE_CONFIG.formattedPhone}</a> if you need immediate changes.`,
+        "info"
+      );
+      return;
+    }
+
     const waText =
-      `New Villa Enquiry - VaishnaviStays\n` +
+      `Availability Enquiry - VaishnaviStays\n` +
       `Name: ${name}\n` +
       `Mobile: ${phone}\n` +
       (email ? `Email: ${email}\n` : "") +
       `Villa: ${villa}\n` +
       `Check-in: ${checkin || "Flexible"}\n` +
-      (checkout ? `Check-out: ${checkout}\n` : "") +
+      `Check-out: ${checkout || "Flexible"}\n` +
       `Guests: ${guests || "Not specified"}\n` +
       `Notes: ${notes || "Interested in availability and tariff."}`;
 
     const waUrl = `${SITE_CONFIG.whatsappBase}?text=${encodeURIComponent(waText)}`;
 
-    // Loading state
+    isSubmitting = true;
     const originalBtnHtml = submitBtn ? submitBtn.innerHTML : "";
     if (submitBtn) {
       submitBtn.disabled = true;
@@ -735,23 +799,27 @@ function bindEnquiryForm(form, cfg) {
       }
     }
 
+    isSubmitting = false;
     if (submitBtn) {
       submitBtn.disabled = false;
       submitBtn.removeAttribute("aria-busy");
       submitBtn.innerHTML = originalBtnHtml;
     }
 
+    lastSubmitKey = submitKey;
+    lastSubmitTime = nowMs;
+
     if (netlifyDelivered) {
       showFormAlert(
         alertEl,
-        `Thank you, ${escapeHtml(name)}. Your enquiry has been submitted to our booking desk. <a href="${waUrl}" target="_blank" rel="noopener noreferrer">Also send via WhatsApp (${SITE_CONFIG.phone})</a> for instant confirmation.`,
+        `Enquiry received for ${escapeHtml(name)}. Note: this is an availability request, not a confirmed booking until confirmed by our team. <a href="${waUrl}" target="_blank" rel="noopener noreferrer">Send on WhatsApp (${SITE_CONFIG.phone})</a> for faster reply.`,
         "success"
       );
       form.reset();
     } else {
       showFormAlert(
         alertEl,
-        `Your enquiry details are validated and ready. <a href="${waUrl}" target="_blank" rel="noopener noreferrer">Send directly via WhatsApp (${SITE_CONFIG.formattedPhone})</a> or call <a href="${SITE_CONFIG.telHref}">${SITE_CONFIG.formattedPhone}</a> for immediate assistance.`,
+        `Your enquiry details are ready (note: availability is confirmed only after speaking with our team). <a href="${waUrl}" target="_blank" rel="noopener noreferrer">Send directly via WhatsApp (${SITE_CONFIG.formattedPhone})</a> or call <a href="${SITE_CONFIG.telHref}">${SITE_CONFIG.formattedPhone}</a>.`,
         "info"
       );
     }
@@ -759,7 +827,7 @@ function bindEnquiryForm(form, cfg) {
 }
 
 /* --------------------------------------------------------------------------
-   Photo Gallery & Accessible Lightbox
+   Photo Gallery & Accessible Touch/Keyboard Lightbox
    -------------------------------------------------------------------------- */
 let activeLightboxIndex = 0;
 let currentGalleryItems = [...GALLERY_ITEMS];
@@ -767,21 +835,30 @@ let currentGalleryItems = [...GALLERY_ITEMS];
 function initGallery() {
   const galleryGrid = document.getElementById("galleryGrid");
   const filterBtns = document.querySelectorAll(".gallery-filter-btn");
+  const statusEl = document.getElementById("galleryStatus");
   const lightbox = document.getElementById("lightboxModal");
   const lightboxImg = document.getElementById("lightboxImg");
   const lightboxCaption = document.getElementById("lightboxCaption");
   const closeBtn = document.getElementById("lightboxClose");
   const prevBtn = document.getElementById("lightboxPrev");
   const nextBtn = document.getElementById("lightboxNext");
+  let lastGalleryTrigger = null;
 
   if (!galleryGrid) return;
 
+  if (lightbox) {
+    lightbox.setAttribute("aria-hidden", "true");
+  }
+
   function renderGallery(items) {
     currentGalleryItems = items;
+    if (statusEl) {
+      statusEl.textContent = `Showing ${items.length} ${items.length === 1 ? "photograph" : "photographs"}.`;
+    }
     galleryGrid.innerHTML = items
       .map(
         (item, index) => `
-      <div class="gallery-card" role="button" tabindex="0" aria-label="Open photo: ${escapeHtml(item.title)}" onclick="openLightbox(${index})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(${index});}">
+      <div class="gallery-card" role="button" tabindex="0" aria-label="Open photo: ${escapeHtml(item.title)}" data-gallery-index="${index}">
         ${renderPictureHtml(item, "gallery-card__img", item.title)}
         <div class="gallery-card__caption">
           <span class="gallery-card__cat">${escapeHtml(item.categoryLabel)}</span>
@@ -794,6 +871,21 @@ function initGallery() {
   }
 
   renderGallery(GALLERY_ITEMS);
+
+  // Event delegation for gallery click & keyboard activation
+  galleryGrid.addEventListener("click", (e) => {
+    const card = e.target.closest("[data-gallery-index]");
+    if (!card) return;
+    openLightbox(Number(card.getAttribute("data-gallery-index")), card);
+  });
+
+  galleryGrid.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    const card = e.target.closest("[data-gallery-index]");
+    if (!card) return;
+    e.preventDefault();
+    openLightbox(Number(card.getAttribute("data-gallery-index")), card);
+  });
 
   filterBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -813,19 +905,27 @@ function initGallery() {
     });
   });
 
-  window.openLightbox = function (index) {
+  function openLightbox(index, triggerEl = null) {
     if (!lightbox || currentGalleryItems.length === 0) return;
+    lastGalleryTrigger = triggerEl || document.activeElement;
     activeLightboxIndex = Math.max(0, Math.min(index, currentGalleryItems.length - 1));
     updateLightbox();
     lightbox.classList.add("is-open");
+    lightbox.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
     closeBtn && closeBtn.focus();
-  };
+  }
+
+  window.openLightbox = openLightbox;
 
   function closeLightbox() {
     if (!lightbox) return;
     lightbox.classList.remove("is-open");
+    lightbox.setAttribute("aria-hidden", "true");
     document.body.style.overflow = "";
+    if (lastGalleryTrigger && typeof lastGalleryTrigger.focus === "function") {
+      lastGalleryTrigger.focus();
+    }
   }
 
   function updateLightbox() {
@@ -857,6 +957,35 @@ function initGallery() {
       if (e.target === lightbox) closeLightbox();
     });
 
+  // Touch swipe navigation on mobile devices
+  let touchStartX = 0;
+  let touchStartY = 0;
+  if (lightbox) {
+    lightbox.addEventListener(
+      "touchstart",
+      (e) => {
+        if (e.changedTouches && e.changedTouches[0]) {
+          touchStartX = e.changedTouches[0].clientX;
+          touchStartY = e.changedTouches[0].clientY;
+        }
+      },
+      { passive: true }
+    );
+    lightbox.addEventListener(
+      "touchend",
+      (e) => {
+        if (!lightbox.classList.contains("is-open") || !e.changedTouches?.[0]) return;
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        const dy = e.changedTouches[0].clientY - touchStartY;
+        if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) {
+          if (dx < 0) showNext();
+          else showPrev();
+        }
+      },
+      { passive: true }
+    );
+  }
+
   document.addEventListener("keydown", (e) => {
     if (!lightbox || !lightbox.classList.contains("is-open")) return;
     if (e.key === "Escape") closeLightbox();
@@ -866,7 +995,7 @@ function initGallery() {
 }
 
 /* --------------------------------------------------------------------------
-   Accessible FAQ Accordion
+   Accessible FAQ Accordion (Supports native <button> or element)
    -------------------------------------------------------------------------- */
 function initFaqAccordion() {
   const faqItems = document.querySelectorAll(".faq-item");
@@ -875,8 +1004,10 @@ function initFaqAccordion() {
     const question = item.querySelector(".faq-question");
     if (!question) return;
 
-    question.setAttribute("role", "button");
-    question.setAttribute("tabindex", "0");
+    if (question.tagName !== "BUTTON") {
+      question.setAttribute("role", "button");
+      question.setAttribute("tabindex", "0");
+    }
     question.setAttribute("aria-expanded", item.classList.contains("is-open") ? "true" : "false");
 
     const toggleItem = () => {
@@ -895,12 +1026,14 @@ function initFaqAccordion() {
     };
 
     question.addEventListener("click", toggleItem);
-    question.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        toggleItem();
-      }
-    });
+    if (question.tagName !== "BUTTON") {
+      question.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          toggleItem();
+        }
+      });
+    }
   });
 }
 

@@ -38,8 +38,8 @@ const VILLAS_DATA = [
     badge: "Most Popular",
     webp: "images/villa-lonavala.webp",
     jpg: "images/lonavala villa.jpg",
-    width: 960,
-    height: 1280,
+    width: 720,
+    height: 960,
     location: "Lonavala",
     tagline: "Luxury 4 BHK villa with private pool & rain dance",
     description:
@@ -248,8 +248,8 @@ const GALLERY_ITEMS = [
     categoryLabel: "Private Pools",
     webp: "images/villa-lonavala.webp",
     jpg: "images/lonavala villa.jpg",
-    width: 960,
-    height: 1280,
+    width: 720,
+    height: 960,
     villaSlug: "lonavala-villa"
   },
   {
