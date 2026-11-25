@@ -33,7 +33,7 @@ const VILLAS_DATA = [
     slug: "lonavala-villa",
     name: "Lonavala Villa",
     category: "lonavala",
-    tags: ["lonavala", "pool", "party"],
+    tags: ["lonavala", "4bhk", "pool", "party"],
     highlight: "4 BHK Villa",
     badge: "Most Popular",
     webp: "images/villa-lonavala.webp",
@@ -41,18 +41,18 @@ const VILLAS_DATA = [
     width: 960,
     height: 1280,
     location: "Lonavala",
-    tagline: "Luxury 4BHK villa with private pool & rain dance",
+    tagline: "Luxury 4 BHK villa with private pool & rain dance",
     description:
-      "Framed by lush flowering greenery, Lonavala Villa is a spacious 4BHK private residence featuring a dedicated swimming pool, rain dance area, air-conditioned rooms, and relaxed outdoor seating designed for family stays, weekend getaways, and group celebrations.",
+      "Framed by lush flowering greenery, Lonavala Villa is a spacious 4 BHK private residence featuring a dedicated swimming pool, rain dance area, air-conditioned rooms, and relaxed outdoor seating designed for family stays, weekend getaways, and group celebrations.",
     specs: {
       accommodation: "4 BHK AC Villa",
       pool: "Private Pool & Rain Dance",
       idealFor: "Families & Parties"
     },
     amenities: [
+      "4 Air-Conditioned Bedrooms",
       "Private Swimming Pool",
       "Rain Dance Setup",
-      "Air-Conditioned Rooms",
       "Lush Greenery & Sit-out",
       "Party & Celebration Friendly",
       "Direct Booking Support"
@@ -63,27 +63,27 @@ const VILLAS_DATA = [
     slug: "nayak-villa",
     name: "Nayak Villa",
     category: "lonavala",
-    tags: ["lonavala", "pool"],
-    highlight: "Modern Interiors",
-    badge: "Classic Architecture",
+    tags: ["lonavala", "4bhk", "pool"],
+    highlight: "4 BHK Villa",
+    badge: "Modern Interiors",
     webp: "images/villa-nayak.webp",
     jpg: "images/villa2.jpg",
     width: 960,
     height: 1280,
     location: "Lonavala & Khandala",
-    tagline: "Premium villa with modern interiors & private stay",
+    tagline: "Premium 4 BHK villa with modern interiors & private stay",
     description:
-      "Featuring arched balconies, a covered ground portico, and welcoming interiors, Nayak Villa offers a refined private retreat near Mumbai and Pune tailored for unhurried family holidays and peaceful weekend stays.",
+      "Featuring arched balconies, a covered ground portico, and welcoming interiors, Nayak Villa is a 4 BHK private retreat near Mumbai and Pune tailored for unhurried family holidays and peaceful weekend stays.",
     specs: {
-      accommodation: "AC Villa Rooms",
+      accommodation: "4 BHK AC Villa",
       pool: "Private Pool Access",
       idealFor: "Family & Weekend Stays"
     },
     amenities: [
+      "4 Air-Conditioned Bedrooms",
       "Private Swimming Pool",
       "Modern Interiors & Lounge",
       "Arched Balcony & Portico",
-      "Air-Conditioned Rooms",
       "Family-Friendly Setting",
       "Direct Booking Support"
     ]
@@ -93,27 +93,27 @@ const VILLAS_DATA = [
     slug: "muscut-house",
     name: "Muscut House",
     category: "lonavala",
-    tags: ["lonavala", "nature", "pool"],
-    highlight: "Terrace View",
+    tags: ["lonavala", "4bhk", "nature", "pool"],
+    highlight: "4 BHK Villa",
     badge: "Terrace View",
     webp: "images/villa-muscut.webp",
     jpg: "images/villa3.jpg",
     width: 960,
     height: 1280,
     location: "Lonavala & Khandala",
-    tagline: "Peaceful villa with terrace view & spacious living lounge",
+    tagline: "Peaceful 4 BHK villa with terrace view & spacious living lounge",
     description:
-      "Designed around an expansive, sunlit indoor living hall and serene terrace viewpoints, Muscut House brings families and friends together in quiet comfort with private pool access and air-conditioned rooms.",
+      "Designed around an expansive, sunlit indoor living hall and serene terrace viewpoints, Muscut House is a 4 BHK retreat bringing families and friends together in quiet comfort with private pool access and air-conditioned rooms.",
     specs: {
-      accommodation: "Spacious Lounge & AC Rooms",
+      accommodation: "4 BHK AC Villa",
       pool: "Private Pool Access",
       idealFor: "Peaceful Retreats"
     },
     amenities: [
+      "4 Air-Conditioned Bedrooms",
       "Scenic Terrace View",
       "Expansive Living Lounge",
       "Private Swimming Pool",
-      "Air-Conditioned Rooms",
       "Serene Atmosphere",
       "Direct Booking Support"
     ]
@@ -123,26 +123,26 @@ const VILLAS_DATA = [
     slug: "khandala-villa",
     name: "Khandala Villa",
     category: "khandala",
-    tags: ["khandala", "pool", "party"],
-    highlight: "5-Star Villa",
+    tags: ["khandala", "4bhk", "pool", "party"],
+    highlight: "4 BHK Villa",
     badge: "Large Pool & Lawn",
     webp: "images/villa-khandala.webp",
     jpg: "images/villa4.jpg",
     width: 1280,
     height: 853,
     location: "Khandala",
-    tagline: "5-star villa with large illuminated private pool & lawn",
+    tagline: "5-star 4 BHK villa with large illuminated private pool & lawn",
     description:
-      "Set in Khandala, this upscale retreat centers around an illuminated private swimming pool, timber sun loungers, and manicured green lawn — suited for family gatherings, celebrations, and luxury weekend escapes.",
+      "Set in Khandala, this upscale 4 BHK retreat centers around an illuminated private swimming pool, timber sun loungers, and manicured green lawn — suited for family gatherings, celebrations, and luxury weekend escapes.",
     specs: {
-      accommodation: "Luxury AC Suites",
+      accommodation: "4 BHK AC Villa",
       pool: "Large Private Pool",
       idealFor: "Groups & Celebrations"
     },
     amenities: [
+      "4 Air-Conditioned Bedrooms",
       "Large Illuminated Private Pool",
       "Manicured Lawn & Loungers",
-      "Air-Conditioned Suites",
       "Celebration & Party Friendly",
       "Mountain Surroundings",
       "Direct Booking Support"
@@ -153,27 +153,27 @@ const VILLAS_DATA = [
     slug: "captain-villa-7",
     name: "Captain Villa 7",
     category: "lonavala",
-    tags: ["lonavala", "party", "pool"],
-    highlight: "Spacious Garden",
-    badge: "Garden Villa",
+    tags: ["lonavala", "3bhk", "party", "pool"],
+    highlight: "3 BHK Villa",
+    badge: "Spacious Garden",
     webp: "images/villa-captain-7.webp",
     jpg: "images/villa5.jpg",
     width: 1280,
     height: 852,
     location: "Lonavala & Khandala",
-    tagline: "Spacious villa with garden, covered veranda & private pool",
+    tagline: "Spacious 3 BHK villa with garden, covered veranda & private pool",
     description:
-      "Shaded by tall evergreen trees, Captain Villa 7 combines warm brick-clad architecture with a spacious courtyard garden, covered veranda, upper balcony, private pool access, and air-conditioned bedrooms.",
+      "Shaded by tall evergreen trees, Captain Villa 7 is a 3 BHK residence combining warm brick-clad architecture with a spacious courtyard garden, covered veranda, upper balcony, private pool access, and air-conditioned bedrooms.",
     specs: {
-      accommodation: "AC Villa Rooms",
+      accommodation: "3 BHK AC Villa",
       pool: "Private Pool Access",
       idealFor: "Families & Gatherings"
     },
     amenities: [
+      "3 Air-Conditioned Bedrooms",
       "Spacious Garden & Courtyard",
       "Covered Veranda & Balcony",
       "Private Swimming Pool",
-      "Air-Conditioned Rooms",
       "Family & Group Friendly",
       "Direct Booking Support"
     ]
@@ -183,27 +183,27 @@ const VILLAS_DATA = [
     slug: "captain-villa-8",
     name: "Captain Villa 8",
     category: "lonavala",
-    tags: ["lonavala", "party", "nature"],
-    highlight: "Bonfire Setup",
+    tags: ["lonavala", "3bhk", "party", "nature"],
+    highlight: "3 BHK Villa",
     badge: "Waterfall Pool & Bonfire",
     webp: "images/villa-captain-8.webp",
     jpg: "images/villa6.jpg",
     width: 1280,
     height: 852,
     location: "Lonavala & Khandala",
-    tagline: "Villa with bonfire setup, waterfall pool & hill views",
+    tagline: "3 BHK villa with bonfire setup, waterfall pool & hill views",
     description:
-      "Built for crisp hill-station evenings, Captain Villa 8 pairs a private waterfall-feature swimming pool and elevated hill-view balcony with an outdoor bonfire setup and comfortable air-conditioned interiors.",
+      "Built for crisp hill-station evenings, Captain Villa 8 is a 3 BHK villa pairing a private waterfall-feature swimming pool and elevated hill-view balcony with an outdoor bonfire setup and comfortable air-conditioned interiors.",
     specs: {
-      accommodation: "AC Villa Rooms",
+      accommodation: "3 BHK AC Villa",
       pool: "Waterfall Feature Pool",
       idealFor: "Parties & Bonfires"
     },
     amenities: [
+      "3 Air-Conditioned Bedrooms",
       "Dedicated Bonfire Setup",
       "Private Waterfall Pool",
       "Hill View Balcony",
-      "Air-Conditioned Rooms",
       "Party & Celebration Ready",
       "Direct Booking Support"
     ]
@@ -213,27 +213,27 @@ const VILLAS_DATA = [
     slug: "captain-villa-10",
     name: "Captain Villa 10",
     category: "khandala",
-    tags: ["khandala", "nature", "pool"],
-    highlight: "Nature Retreat",
+    tags: ["khandala", "3bhk", "nature", "pool"],
+    highlight: "3 BHK Villa",
     badge: "Nature View",
     webp: "images/villa-captain-10.webp",
     jpg: "images/villa7.jpg",
     width: 1280,
     height: 852,
     location: "Lonavala & Khandala",
-    tagline: "Nature view relaxing villa with cozy dining & kitchen",
+    tagline: "Nature view relaxing 3 BHK villa with cozy dining & kitchen",
     description:
-      "A calm hillside sanctuary offering a dedicated family dining space, modular kitchen area, comfortable air-conditioned bedrooms, and private pool access surrounded by serene greenery.",
+      "A calm hillside sanctuary offering 3 air-conditioned bedrooms, a dedicated family dining space, modular kitchen area, and private pool access surrounded by serene greenery.",
     specs: {
-      accommodation: "AC Rooms & Kitchen",
+      accommodation: "3 BHK AC Villa",
       pool: "Private Pool Access",
       idealFor: "Nature & Relaxation"
     },
     amenities: [
+      "3 Air-Conditioned Bedrooms",
       "Nature View Surroundings",
       "Dining Area & Modular Kitchen",
       "Private Swimming Pool",
-      "Air-Conditioned Rooms",
       "Peaceful Weekend Stay",
       "Direct Booking Support"
     ]
