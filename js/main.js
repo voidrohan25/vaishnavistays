@@ -1,286 +1,51 @@
 /**
- * VaishnaviStays - Luxury Villa Rentals in Lonavala & Khandala
- * Core Application Logic & Interactions
- * Primary Contact & WhatsApp: +91 9767674307
+ * VaishnaviStays - Production Frontend Application
+ * Depends on js/data.js (SITE_CONFIG, ICONS, VILLAS_DATA, GALLERY_ITEMS)
  */
 
-const CONTACT_PHONE = "9767674307";
-const INT_PHONE = "+919767674307";
-const WHATSAPP_BASE = "https://wa.me/919767674307";
-
-// Complete Villa Inventory Data (Grounded in verified properties & photos)
-const VILLAS_DATA = [
-  {
-    id: 1,
-    name: "Lonavala Villa",
-    category: "lonavala",
-    tags: ["lonavala", "pool", "party"],
-    highlight: "4 BHK",
-    badge: "Most Popular",
-    image: "images/lonavala villa.jpg",
-    location: "Lonavala",
-    tagline: "Luxury 4BHK villa with private pool & rain dance",
-    description:
-      "Spacious 4BHK private villa featuring a sparkling private swimming pool, dedicated rain dance area, lush tropical greenery, air-conditioned rooms, and an ideal setting for families, parties, and weekend getaways.",
-    specs: {
-      accommodation: "4 BHK AC Villa",
-      pool: "Private Pool & Rain Dance",
-      idealFor: "Families & Parties"
-    },
-    amenities: [
-      "Private Swimming Pool",
-      "Rain Dance Setup",
-      "Air-Conditioned Rooms",
-      "Lush Greenery & Sit-out",
-      "Party & Celebration Friendly",
-      "Direct Booking Support"
-    ]
-  },
-  {
-    id: 2,
-    name: "Nayak Villa",
-    category: "lonavala",
-    tags: ["lonavala", "pool"],
-    highlight: "Modern Interiors",
-    badge: "Modern Luxury",
-    image: "images/villa2.jpg",
-    location: "Lonavala & Khandala",
-    tagline: "Premium villa with modern interiors & private stay",
-    description:
-      "Thoughtfully styled private villa featuring classic arched balconies, covered portico, air-conditioned comfort, and spacious interiors tailored for peaceful family holidays and weekend escapes near Mumbai and Pune.",
-    specs: {
-      accommodation: "AC Villa Rooms",
-      pool: "Private Pool Access",
-      idealFor: "Family & Weekend Stays"
-    },
-    amenities: [
-      "Private Swimming Pool",
-      "Modern Interiors & Lounge",
-      "Arched Balcony & Portico",
-      "Air-Conditioned Rooms",
-      "Family-Friendly Setting",
-      "Direct Booking Support"
-    ]
-  },
-  {
-    id: 3,
-    name: "Muscut House",
-    category: "lonavala",
-    tags: ["lonavala", "nature", "pool"],
-    highlight: "Terrace View",
-    badge: "Terrace View",
-    image: "images/villa3.jpg",
-    location: "Lonavala & Khandala",
-    tagline: "Peaceful villa with terrace view & spacious living lounge",
-    description:
-      "A tranquil retreat combining an expansive indoor living lounge with peaceful terrace views — ideal for quality time with family and friends, relaxed evenings, and refreshing weekend getaways.",
-    specs: {
-      accommodation: "Spacious Lounge & AC Rooms",
-      pool: "Private Pool Access",
-      idealFor: "Peaceful Retreats"
-    },
-    amenities: [
-      "Scenic Terrace View",
-      "Expansive Living Lounge",
-      "Private Swimming Pool",
-      "Air-Conditioned Rooms",
-      "Serene Atmosphere",
-      "Direct Booking Support"
-    ]
-  },
-  {
-    id: 4,
-    name: "Khandala Villa",
-    category: "khandala",
-    tags: ["khandala", "pool", "party"],
-    highlight: "5-Star Estate",
-    badge: "5-Star Villa",
-    image: "images/villa4.jpg",
-    location: "Khandala",
-    tagline: "5-star villa with large illuminated private pool & lawn",
-    description:
-      "An upscale Khandala retreat featuring a large illuminated swimming pool, poolside loungers, manicured green lawn, and spacious living areas designed for milestone celebrations, group outings, and luxury weekend stays.",
-    specs: {
-      accommodation: "Luxury AC Suites",
-      pool: "Large Private Pool",
-      idealFor: "Groups & Celebrations"
-    },
-    amenities: [
-      "Large Illuminated Private Pool",
-      "Manicured Lawn & Loungers",
-      "Air-Conditioned Suites",
-      "Celebration & Party Friendly",
-      "Mountain Surroundings",
-      "Direct Booking Support"
-    ]
-  },
-  {
-    id: 5,
-    name: "Captain Villa 7",
-    category: "lonavala",
-    tags: ["lonavala", "party", "pool"],
-    highlight: "Spacious Garden",
-    badge: "Garden Villa",
-    image: "images/villa5.jpg",
-    location: "Lonavala & Khandala",
-    tagline: "Spacious villa with garden, covered veranda & private pool",
-    description:
-      "Surrounded by tall evergreens, Captain Villa 7 offers a charming brick-clad residence with a spacious outdoor area, covered veranda, balcony views, private pool access, and air-conditioned rooms.",
-    specs: {
-      accommodation: "AC Villa Rooms",
-      pool: "Private Pool Access",
-      idealFor: "Families & Gatherings"
-    },
-    amenities: [
-      "Spacious Garden & Outdoor Area",
-      "Covered Veranda & Balcony",
-      "Private Swimming Pool",
-      "Air-Conditioned Rooms",
-      "Family & Group Friendly",
-      "Direct Booking Support"
-    ]
-  },
-  {
-    id: 6,
-    name: "Captain Villa 8",
-    category: "lonavala",
-    tags: ["lonavala", "party", "nature"],
-    highlight: "Bonfire Setup",
-    badge: "Bonfire & Pool",
-    image: "images/villa6.jpg",
-    location: "Lonavala & Khandala",
-    tagline: "Villa with bonfire setup, waterfall pool & hill views",
-    description:
-      "Built for memorable group evenings with a dedicated bonfire setup, private waterfall-feature swimming pool, elevated viewing balcony, and scenic hill views in the Sahyadri ranges.",
-    specs: {
-      accommodation: "AC Villa Rooms",
-      pool: "Waterfall Feature Pool",
-      idealFor: "Parties & Bonfires"
-    },
-    amenities: [
-      "Dedicated Bonfire Setup",
-      "Private Waterfall Pool",
-      "Hill View Balcony",
-      "Air-Conditioned Rooms",
-      "Party & Celebration Ready",
-      "Direct Booking Support"
-    ]
-  },
-  {
-    id: 7,
-    name: "Captain Villa 10",
-    category: "khandala",
-    tags: ["khandala", "nature", "pool"],
-    highlight: "Nature Retreat",
-    badge: "Nature View",
-    image: "images/villa7.jpg",
-    location: "Lonavala & Khandala",
-    tagline: "Nature view relaxing villa with cozy dining & kitchen",
-    description:
-      "A warm, welcoming sanctuary amidst peaceful natural surroundings, featuring comfortable dining and modular kitchen spaces, air-conditioned rooms, and private pool access for unhurried weekend relaxation.",
-    specs: {
-      accommodation: "AC Rooms & Kitchen",
-      pool: "Private Pool Access",
-      idealFor: "Nature & Relaxation"
-    },
-    amenities: [
-      "Nature View Surroundings",
-      "Dining Area & Modular Kitchen",
-      "Private Swimming Pool",
-      "Air-Conditioned Rooms",
-      "Peaceful Weekend Stay",
-      "Direct Booking Support"
-    ]
-  }
-];
-
-// Gallery Media Items (Accurately matched to actual property photographs)
-const GALLERY_ITEMS = [
-  {
-    id: 1,
-    title: "Lonavala Villa – Private Pool & Tropical Greenery",
-    category: "pools",
-    categoryLabel: "Private Pools",
-    img: "images/lonavala villa.jpg"
-  },
-  {
-    id: 2,
-    title: "Khandala Villa – Illuminated Pool & Lawn",
-    category: "pools",
-    categoryLabel: "Private Pools",
-    img: "images/villa4.jpg"
-  },
-  {
-    id: 3,
-    title: "Captain Villa 8 – Waterfall Pool & Hill Backdrop",
-    category: "views",
-    categoryLabel: "Hill Views & Pools",
-    img: "images/villa6.jpg"
-  },
-  {
-    id: 4,
-    title: "Nayak Villa – Classic Arched Facade & Balconies",
-    category: "exteriors",
-    categoryLabel: "Villa Exteriors",
-    img: "images/villa2.jpg"
-  },
-  {
-    id: 5,
-    title: "Captain Villa 7 – Brick Exterior & Covered Veranda",
-    category: "exteriors",
-    categoryLabel: "Villa Exteriors",
-    img: "images/villa5.jpg"
-  },
-  {
-    id: 6,
-    title: "Muscut House – Spacious Living Hall & Lounge",
-    category: "interiors",
-    categoryLabel: "Interiors",
-    img: "images/villa3.jpg"
-  },
-  {
-    id: 7,
-    title: "Captain Villa 10 – Dining Area & Modular Kitchen",
-    category: "interiors",
-    categoryLabel: "Interiors",
-    img: "images/villa7.jpg"
-  }
-];
-
-// Document Ready Initialization
 document.addEventListener("DOMContentLoaded", () => {
   initDateConstraints();
   initNavbar();
   initBackToTop();
   initVillas();
+  initVillaDetailPage();
   initGallery();
   initFaqAccordion();
   initSearchForm();
-  initContactForm();
-  initBookingModal();
+  initEnquiryForms();
+  initSubtleReveal();
 });
 
 /* --------------------------------------------------------------------------
-   Helpers: Date Constraints & Inline Alerts
+   Helpers: Security, Dates, Markup & Inline Alerts
    -------------------------------------------------------------------------- */
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 function getTodayISO() {
   const now = new Date();
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const day = String(now.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, "0");
+  const d = String(now.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
 }
 
 function initDateConstraints() {
   const today = getTodayISO();
-  const allDates = document.querySelectorAll('input[type="date"]');
-  allDates.forEach(input => {
+  document.querySelectorAll('input[type="date"]').forEach((input) => {
     input.min = today;
   });
 
   const pairs = [
     ["searchCheckIn", "searchCheckOut"],
-    ["modalCheckIn", "modalCheckOut"]
+    ["modalCheckIn", "modalCheckOut"],
+    ["detailCheckIn", "detailCheckOut"]
   ];
 
   pairs.forEach(([inId, outId]) => {
@@ -291,7 +56,7 @@ function initDateConstraints() {
     inEl.addEventListener("change", () => {
       if (inEl.value) {
         outEl.min = inEl.value;
-        if (outEl.value && outEl.value < inEl.value) {
+        if (outEl.value && outEl.value <= inEl.value) {
           outEl.value = "";
         }
       } else {
@@ -301,71 +66,94 @@ function initDateConstraints() {
   });
 }
 
-function showInlineAlert(el, message, isSuccess = false) {
-  if (!el) return;
-  el.classList.remove("form-alert-error", "form-alert-success", "active");
-  el.classList.add(isSuccess ? "form-alert-success" : "form-alert-error", "active");
-  el.innerHTML = message;
-}
-
-function hideInlineAlert(el) {
-  if (!el) return;
-  el.classList.remove("active", "form-alert-error", "form-alert-success");
-  el.innerHTML = "";
-}
-
 function isValidIndianPhone(rawPhone) {
   const digits = rawPhone.replace(/\D/g, "");
   return digits.length >= 10 && digits.length <= 13;
 }
 
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function showFormAlert(el, htmlMessage, variant = "error") {
+  if (!el) return;
+  el.classList.remove("form-alert--error", "form-alert--success", "form-alert--info", "is-visible");
+  el.classList.add(`form-alert--${variant}`, "is-visible");
+  el.innerHTML = htmlMessage;
+}
+
+function hideFormAlert(el) {
+  if (!el) return;
+  el.classList.remove("is-visible", "form-alert--error", "form-alert--success", "form-alert--info");
+  el.innerHTML = "";
+}
+
+function renderPictureHtml(item, className, altText, eager = false) {
+  const loadingAttr = eager ? "eager" : "lazy";
+  return `
+    <picture>
+      <source srcset="${escapeHtml(item.webp)}" type="image/webp">
+      <img
+        src="${escapeHtml(item.jpg)}"
+        alt="${escapeHtml(altText)}"
+        width="${item.width}"
+        height="${item.height}"
+        class="${escapeHtml(className)}"
+        loading="${loadingAttr}"
+        decoding="async"
+      >
+    </picture>
+  `;
+}
+
 /* --------------------------------------------------------------------------
-   Navbar & Mobile Menu
+   Navigation & Mobile Drawer
    -------------------------------------------------------------------------- */
 function initNavbar() {
   const header = document.querySelector(".site-header");
-  const mobileToggle = document.querySelector(".mobile-toggle");
+  const toggle = document.querySelector(".mobile-toggle");
   const drawer = document.querySelector(".mobile-drawer");
   const backdrop = document.querySelector(".drawer-backdrop");
   const closeBtn = document.querySelector(".drawer-close");
-  const drawerLinks = document.querySelectorAll(".drawer-link");
+  const links = document.querySelectorAll(".drawer-link");
 
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 40) {
-      header && header.classList.add("scrolled");
-    } else {
-      header && header.classList.remove("scrolled");
-    }
-  });
+  if (header) {
+    const onScroll = () => {
+      header.classList.toggle("is-scrolled", window.scrollY > 24);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
 
   function openDrawer() {
-    drawer && drawer.classList.add("active");
-    backdrop && backdrop.classList.add("active");
-    mobileToggle && mobileToggle.setAttribute("aria-expanded", "true");
+    if (!drawer) return;
+    drawer.classList.add("is-open");
+    backdrop && backdrop.classList.add("is-open");
+    toggle && toggle.setAttribute("aria-expanded", "true");
     document.body.style.overflow = "hidden";
+    closeBtn && closeBtn.focus();
   }
 
   function closeDrawer() {
-    drawer && drawer.classList.remove("active");
-    backdrop && backdrop.classList.remove("active");
-    mobileToggle && mobileToggle.setAttribute("aria-expanded", "false");
+    if (!drawer) return;
+    drawer.classList.remove("is-open");
+    backdrop && backdrop.classList.remove("is-open");
+    toggle && toggle.setAttribute("aria-expanded", "false");
     document.body.style.overflow = "";
   }
 
-  if (mobileToggle) {
-    mobileToggle.setAttribute("aria-expanded", "false");
-    mobileToggle.addEventListener("click", openDrawer);
+  if (toggle) {
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.addEventListener("click", openDrawer);
   }
   closeBtn && closeBtn.addEventListener("click", closeDrawer);
   backdrop && backdrop.addEventListener("click", closeDrawer);
-
-  drawerLinks.forEach(link => {
-    link.addEventListener("click", closeDrawer);
-  });
+  links.forEach((link) => link.addEventListener("click", closeDrawer));
 
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && drawer && drawer.classList.contains("active")) {
+    if (e.key === "Escape" && drawer && drawer.classList.contains("is-open")) {
       closeDrawer();
+      toggle && toggle.focus();
     }
   });
 }
@@ -374,131 +162,107 @@ function initNavbar() {
    Back To Top Button
    -------------------------------------------------------------------------- */
 function initBackToTop() {
-  const backToTopBtn = document.querySelector(".back-to-top");
-  if (!backToTopBtn) return;
+  const btn = document.querySelector(".back-to-top");
+  if (!btn) return;
 
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 400) {
-      backToTopBtn.classList.add("visible");
-    } else {
-      backToTopBtn.classList.remove("visible");
-    }
-  });
+  window.addEventListener(
+    "scroll",
+    () => {
+      btn.classList.toggle("is-visible", window.scrollY > 480);
+    },
+    { passive: true }
+  );
 
-  backToTopBtn.addEventListener("click", () => {
+  btn.addEventListener("click", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
 }
 
 /* --------------------------------------------------------------------------
-   Villa Card Rendering & Filtering
+   Villas Listing, Filtering & Card Builder
    -------------------------------------------------------------------------- */
 function initVillas() {
-  const gridContainer = document.getElementById("villasGrid");
-  const featuredContainer = document.getElementById("featuredVillasGrid");
-  const filterBtns = document.querySelectorAll(".filter-btn");
+  const grid = document.getElementById("villasGrid");
+  const featuredGrid = document.getElementById("featuredVillasGrid");
+  const filterBtns = document.querySelectorAll(".filter-btn[data-filter]");
 
-  if (featuredContainer) {
-    // Showcase 3 distinct properties on Home Page
+  if (featuredGrid) {
     const featured = [VILLAS_DATA[0], VILLAS_DATA[3], VILLAS_DATA[2]];
-    featuredContainer.innerHTML = featured.map(createVillaCardHtml).join("");
+    featuredGrid.innerHTML = featured.map(createVillaCardHtml).join("");
   }
 
-  if (gridContainer) {
-    const urlParams = new URLSearchParams(window.location.search);
-    const initialFilter = urlParams.get("filter") || "all";
+  if (grid) {
+    const params = new URLSearchParams(window.location.search);
+    const initialFilter = params.get("filter") || "all";
+    applyVillaFilter(initialFilter, filterBtns, grid);
 
-    applyVillaFilter(initialFilter, filterBtns);
-
-    filterBtns.forEach(btn => {
+    filterBtns.forEach((btn) => {
       btn.addEventListener("click", () => {
         const filter = btn.getAttribute("data-filter") || "all";
-        applyVillaFilter(filter, filterBtns);
+        applyVillaFilter(filter, filterBtns, grid);
       });
     });
   }
 }
 
-function applyVillaFilter(filter, filterBtns) {
+function applyVillaFilter(filter, filterBtns, grid) {
   let matched = VILLAS_DATA;
   if (filter !== "all") {
-    matched = VILLAS_DATA.filter(v => v.category === filter || (v.tags && v.tags.includes(filter)));
+    matched = VILLAS_DATA.filter(
+      (v) => v.category === filter || (v.tags && v.tags.includes(filter))
+    );
   }
 
-  filterBtns.forEach(b => {
-    const btnFilter = b.getAttribute("data-filter");
-    b.classList.toggle("active", btnFilter === filter);
+  filterBtns.forEach((btn) => {
+    const isMatch = btn.getAttribute("data-filter") === filter;
+    btn.classList.toggle("is-active", isMatch);
+    btn.setAttribute("aria-pressed", isMatch ? "true" : "false");
   });
 
-  renderVillasList(matched);
-}
-
-function renderVillasList(list) {
-  const gridContainer = document.getElementById("villasGrid");
-  if (!gridContainer) return;
-
-  if (list.length === 0) {
-    gridContainer.innerHTML = `
-      <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px;">
-        <i class="fas fa-home" style="font-size: 3rem; color: var(--accent-gold); margin-bottom: 16px;"></i>
-        <h3 style="color: #fff; margin-bottom: 8px;">No villas found matching criteria</h3>
-        <p style="color: var(--text-secondary); margin-bottom: 20px;">Contact VaishnaviStays directly for availability across all our Lonavala &amp; Khandala villas.</p>
-        <a href="${WHATSAPP_BASE}?text=${encodeURIComponent("Hello VaishnaviStays, I am looking for villa options in Lonavala & Khandala")}" class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer">
-          <i class="fab fa-whatsapp"></i> Chat on WhatsApp (${CONTACT_PHONE})
+  if (matched.length === 0) {
+    grid.innerHTML = `
+      <div class="empty-state">
+        <h3>No villas matched this filter</h3>
+        <p>Contact VaishnaviStays directly for tailored recommendations across Lonavala &amp; Khandala.</p>
+        <a href="${SITE_CONFIG.whatsappBase}?text=${encodeURIComponent("Hello VaishnaviStays, I am looking for villa availability in Lonavala & Khandala.")}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+          ${ICONS.whatsapp}<span>Enquire on WhatsApp (${SITE_CONFIG.phone})</span>
         </a>
       </div>
     `;
     return;
   }
 
-  gridContainer.innerHTML = list.map(createVillaCardHtml).join("");
+  grid.innerHTML = matched.map(createVillaCardHtml).join("");
 }
 
 function createVillaCardHtml(villa) {
-  const waMessage = encodeURIComponent(
-    `Hello VaishnaviStays, I am interested in booking *${villa.name}* (${villa.highlight}). Please share availability and tariff details.`
-  );
-
   return `
     <article class="villa-card" data-id="${villa.id}">
-      <div class="villa-image-wrapper">
-        <img src="${villa.image}" alt="${villa.name} - ${villa.tagline}" class="villa-image" loading="lazy">
-        <span class="villa-badge">${villa.badge}</span>
-        <span class="villa-location-tag"><i class="fas fa-map-marker-alt"></i> ${villa.location}</span>
-      </div>
-      <div class="villa-details">
-        <div class="villa-header">
-          <h3 class="villa-title">${villa.name}</h3>
-          <span style="color: var(--accent-gold); font-size: 0.85rem; font-weight: 600;">${villa.highlight}</span>
+      <a href="villa.html?slug=${encodeURIComponent(villa.slug)}" class="villa-card__media" aria-label="View details for ${escapeHtml(villa.name)}">
+        ${renderPictureHtml(villa, "villa-card__img", `${villa.name} - ${villa.tagline}`)}
+        <span class="villa-card__badge">${escapeHtml(villa.badge)}</span>
+      </a>
+      <div class="villa-card__body">
+        <div class="villa-card__meta">
+          <span class="villa-card__location">${ICONS.mapPin}<span>${escapeHtml(villa.location)}</span></span>
+          <span class="villa-card__highlight">${escapeHtml(villa.highlight)}</span>
         </div>
-        <p class="villa-desc">${villa.tagline}</p>
-
-        <div class="villa-specs">
-          <div class="spec-item"><i class="fas fa-bed"></i> <span>${villa.specs.accommodation}</span></div>
-          <div class="spec-item"><i class="fas fa-swimming-pool"></i> <span>${villa.specs.pool}</span></div>
-          <div class="spec-item"><i class="fas fa-users"></i> <span>${villa.specs.idealFor}</span></div>
-        </div>
-
-        <div class="villa-amenity-tags">
-          <span class="amenity-chip"><i class="fas fa-snowflake"></i> AC Rooms</span>
-          <span class="amenity-chip"><i class="fas fa-swimming-pool"></i> Private Pool</span>
-          <span class="amenity-chip"><i class="fas fa-glass-cheers"></i> Party Friendly</span>
-          <span class="amenity-chip"><i class="fas fa-mountain"></i> Scenic Stay</span>
-        </div>
-
-        <div class="villa-footer">
-          <div class="price-box">
-            <span class="price-label">Direct Booking</span>
-            <span class="price-amount">Best Direct Tariff</span>
-          </div>
-          <div class="villa-actions">
-            <button type="button" class="btn btn-sm btn-outline-gold" onclick="openDetailsModal(${villa.id})">
-              Details
-            </button>
-            <a href="${WHATSAPP_BASE}?text=${waMessage}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-whatsapp">
-              <i class="fab fa-whatsapp"></i> Enquire
-            </a>
-          </div>
+        <h3 class="villa-card__title">
+          <a href="villa.html?slug=${encodeURIComponent(villa.slug)}">${escapeHtml(villa.name)}</a>
+        </h3>
+        <p class="villa-card__desc">${escapeHtml(villa.tagline)}</p>
+        <ul class="villa-card__specs">
+          <li>${ICONS.bed}<span>${escapeHtml(villa.specs.accommodation)}</span></li>
+          <li>${ICONS.pool}<span>${escapeHtml(villa.specs.pool)}</span></li>
+          <li>${ICONS.users}<span>${escapeHtml(villa.specs.idealFor)}</span></li>
+        </ul>
+        <div class="villa-card__actions">
+          <a href="villa.html?slug=${encodeURIComponent(villa.slug)}" class="btn btn-outline btn-sm">
+            <span>View Villa</span>${ICONS.arrowRight}
+          </a>
+          <button type="button" class="btn btn-primary btn-sm" onclick="openQuickEnquiry(${villa.id})">
+            <span>Enquire</span>
+          </button>
         </div>
       </div>
     </article>
@@ -506,137 +270,308 @@ function createVillaCardHtml(villa) {
 }
 
 /* --------------------------------------------------------------------------
-   Booking & Villa Details Modal
+   Individual Villa Detail Page (villa.html?slug=...)
    -------------------------------------------------------------------------- */
-function initBookingModal() {
-  const modal = document.getElementById("bookingModal");
-  const closeBtn = document.getElementById("closeModalBtn");
+function initVillaDetailPage() {
+  const container = document.getElementById("villaDetailRoot");
+  if (!container) return;
 
-  if (!modal) return;
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get("slug");
+  const villa = VILLAS_DATA.find((v) => v.slug === slug) || VILLAS_DATA[0];
 
-  function closeModal() {
-    modal.classList.remove("active");
-    document.body.style.overflow = "";
+  if (slug && !VILLAS_DATA.some((v) => v.slug === slug)) {
+    container.innerHTML = `
+      <section class="section">
+        <div class="container">
+          <div class="empty-state">
+            <h1>Villa Not Found</h1>
+            <p>The villa you requested could not be located. Browse all 7 properties below.</p>
+            <a href="villas.html" class="btn btn-primary">Explore All Villas</a>
+          </div>
+        </div>
+      </section>
+    `;
+    return;
   }
 
-  closeBtn && closeBtn.addEventListener("click", closeModal);
+  document.title = `${villa.name} (${villa.highlight}) | VaishnaviStays`;
+  const breadcrumbEl = document.getElementById("villaBreadcrumbTitle");
+  if (breadcrumbEl) breadcrumbEl.textContent = villa.name;
 
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) {
-      closeModal();
-    }
-  });
+  const waUrl = `${SITE_CONFIG.whatsappBase}?text=${encodeURIComponent(
+    `Hello VaishnaviStays, I am interested in booking ${villa.name} (${villa.highlight}) in ${villa.location}. Please share availability and tariff.`
+  )}`;
 
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && modal.classList.contains("active")) {
-      closeModal();
-    }
-  });
+  const otherVillas = VILLAS_DATA.filter((v) => v.id !== villa.id).slice(0, 3);
 
-  const modalForm = document.getElementById("modalBookingForm");
-  const modalAlert = document.getElementById("modalBookingAlert");
+  container.innerHTML = `
+    <section class="section section--tight-top">
+      <div class="container">
+        <div class="villa-detail-grid">
+          <div class="villa-detail__visual">
+            <div class="villa-detail__frame">
+              ${renderPictureHtml(villa, "villa-detail__img", `${villa.name} in ${villa.location}`, true)}
+            </div>
+            <div class="villa-detail__info">
+              <div class="eyebrow">${escapeHtml(villa.location)} • ${escapeHtml(villa.highlight)}</div>
+              <h1 class="villa-detail__title">${escapeHtml(villa.name)}</h1>
+              <p class="villa-detail__lead">${escapeHtml(villa.tagline)}</p>
+              <p class="villa-detail__desc">${escapeHtml(villa.description)}</p>
 
-  if (modalForm) {
-    modalForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      hideInlineAlert(modalAlert);
+              <div class="villa-detail__specs-grid">
+                <div class="spec-tile">
+                  <span class="spec-tile__label">Configuration</span>
+                  <strong class="spec-tile__value">${escapeHtml(villa.specs.accommodation)}</strong>
+                </div>
+                <div class="spec-tile">
+                  <span class="spec-tile__label">Pool Access</span>
+                  <strong class="spec-tile__value">${escapeHtml(villa.specs.pool)}</strong>
+                </div>
+                <div class="spec-tile">
+                  <span class="spec-tile__label">Best Suited For</span>
+                  <strong class="spec-tile__value">${escapeHtml(villa.specs.idealFor)}</strong>
+                </div>
+              </div>
 
-      const villaName = document.getElementById("modalVillaNameInput").value || "Luxury Villa";
-      const name = document.getElementById("modalGuestName").value.trim();
-      const phone = document.getElementById("modalGuestPhone").value.trim();
-      const checkin = document.getElementById("modalCheckIn").value;
-      const checkout = document.getElementById("modalCheckOut").value;
-      const guests = document.getElementById("modalGuestsCount").value;
-      const note = document.getElementById("modalGuestNote").value.trim();
+              <h2 class="sub-heading">Property Highlights &amp; Amenities</h2>
+              <ul class="amenity-checklist">
+                ${villa.amenities.map((a) => `<li>${ICONS.check}<span>${escapeHtml(a)}</span></li>`).join("")}
+              </ul>
 
-      if (!name) {
-        showInlineAlert(modalAlert, "Please enter your full name.");
-        return;
-      }
+              <div class="villa-detail__quick-ctas">
+                <a href="${SITE_CONFIG.telHref}" class="btn btn-outline">
+                  ${ICONS.phone}<span>Call ${SITE_CONFIG.formattedPhone}</span>
+                </a>
+                <a href="${waUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">
+                  ${ICONS.whatsapp}<span>WhatsApp Instant Enquiry</span>
+                </a>
+              </div>
+            </div>
+          </div>
 
-      if (!isValidIndianPhone(phone)) {
-        showInlineAlert(modalAlert, "Please enter a valid 10-digit mobile number.");
-        return;
-      }
+          <aside class="villa-detail__sidebar">
+            <div class="form-card">
+              <span class="eyebrow">Direct Reservation Desk</span>
+              <h2 class="form-card__title">Enquire for ${escapeHtml(villa.name)}</h2>
+              <p class="form-card__subtitle">Check availability and direct tariff without platform fees.</p>
 
-      if (checkin && checkout && checkout <= checkin) {
-        showInlineAlert(modalAlert, "Check-out date must be after the check-in date.");
-        return;
-      }
+              <form id="villaDetailForm" name="villa-enquiry" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+                <input type="hidden" name="form-name" value="villa-enquiry">
+                <input type="hidden" name="villa" value="${escapeHtml(villa.name)}">
+                <p class="sr-only" aria-hidden="true">
+                  <label>Leave blank: <input name="bot-field" tabindex="-1" autocomplete="off"></label>
+                </p>
 
-      const message =
-`*NEW VILLA BOOKING ENQUIRY*
-━━━━━━━━━━━━━━━━━━
-🏡 *Villa:* ${villaName}
-👤 *Name:* ${name}
-📞 *Phone:* ${phone}
-📅 *Check-in:* ${checkin || "To be confirmed"}
-📅 *Check-out:* ${checkout || "To be confirmed"}
-👥 *Guests:* ${guests}
-📝 *Notes:* ${note || "None"}
-━━━━━━━━━━━━━━━━━━
-Please share availability and direct booking tariff.`;
+                <div class="field">
+                  <label for="detailName">Full Name *</label>
+                  <input id="detailName" name="name" type="text" class="input" placeholder="Your full name" required autocomplete="name">
+                </div>
 
-      const waUrl = `${WHATSAPP_BASE}?text=${encodeURIComponent(message)}`;
-      window.open(waUrl, "_blank", "noopener,noreferrer");
+                <div class="field">
+                  <label for="detailPhone">Mobile Number *</label>
+                  <input id="detailPhone" name="phone" type="tel" class="input" placeholder="10-digit mobile number" required autocomplete="tel">
+                </div>
 
-      showInlineAlert(
-        modalAlert,
-        `Booking request prepared! <a href="${waUrl}" target="_blank" rel="noopener noreferrer">Click here if WhatsApp did not open automatically</a>.`,
-        true
-      );
-      modalForm.reset();
-    });
-  }
+                <div class="field">
+                  <label for="detailEmail">Email Address (Optional)</label>
+                  <input id="detailEmail" name="email" type="email" class="input" placeholder="name@example.com" autocomplete="email">
+                </div>
+
+                <div class="field-row">
+                  <div class="field">
+                    <label for="detailCheckIn">Check-in</label>
+                    <input id="detailCheckIn" name="checkin" type="date" class="input">
+                  </div>
+                  <div class="field">
+                    <label for="detailCheckOut">Check-out</label>
+                    <input id="detailCheckOut" name="checkout" type="date" class="input">
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="detailGuests">Number of Guests</label>
+                  <select id="detailGuests" name="guests" class="input">
+                    <option value="4-6 Guests">4 - 6 Guests</option>
+                    <option value="7-10 Guests">7 - 10 Guests</option>
+                    <option value="11-15 Guests" selected>11 - 15 Guests</option>
+                    <option value="16-20 Guests">16 - 20 Guests</option>
+                    <option value="20+ Guests">20+ Guests</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="detailNotes">Notes / Occasion</label>
+                  <textarea id="detailNotes" name="notes" class="input textarea" placeholder="Family stay, birthday gathering, travel questions..."></textarea>
+                </div>
+
+                <div id="detailFormAlert" class="form-alert" role="alert"></div>
+
+                <button type="submit" class="btn btn-primary btn-block">
+                  <span>Send Availability Request</span>
+                </button>
+              </form>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tinted">
+      <div class="container">
+        <div class="section-header section-header--split">
+          <div>
+            <span class="eyebrow">Continue Exploring</span>
+            <h2 class="section-title">More Villas in Our Collection</h2>
+          </div>
+          <a href="villas.html" class="btn btn-outline btn-sm">
+            <span>View All 7 Villas</span>${ICONS.arrowRight}
+          </a>
+        </div>
+        <div class="villas-grid">
+          ${otherVillas.map(createVillaCardHtml).join("")}
+        </div>
+      </div>
+    </section>
+  `;
+
+  initDateConstraints();
 }
 
-function openDetailsModal(villaId) {
-  const modal = document.getElementById("bookingModal");
-  if (!modal) return;
+/* --------------------------------------------------------------------------
+   Shared Quick-Enquiry Modal (Injected Once Dynamically)
+   -------------------------------------------------------------------------- */
+function ensureBookingModal() {
+  let modal = document.getElementById("bookingModal");
+  if (modal) return modal;
 
-  const villa = VILLAS_DATA.find(v => v.id === villaId);
+  modal = document.createElement("div");
+  modal.id = "bookingModal";
+  modal.className = "modal";
+  modal.setAttribute("role", "dialog");
+  modal.setAttribute("aria-modal", "true");
+  modal.setAttribute("aria-labelledby", "modalVillaTitle");
+
+  modal.innerHTML = `
+    <div class="modal__box">
+      <button type="button" class="modal__close" id="closeModalBtn" aria-label="Close modal">&times;</button>
+      <span class="eyebrow">Direct Enquiry</span>
+      <h3 class="modal__title" id="modalVillaTitle">Villa Enquiry</h3>
+      <p class="modal__subtitle" id="modalVillaSubtitle"></p>
+
+      <form id="modalBookingForm" name="villa-enquiry" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+        <input type="hidden" name="form-name" value="villa-enquiry">
+        <input type="hidden" id="modalVillaNameInput" name="villa" value="">
+        <p class="sr-only" aria-hidden="true">
+          <label>Leave blank: <input name="bot-field" tabindex="-1" autocomplete="off"></label>
+        </p>
+
+        <div class="field">
+          <label for="modalGuestName">Full Name *</label>
+          <input type="text" id="modalGuestName" name="name" class="input" placeholder="Your full name" required>
+        </div>
+
+        <div class="field">
+          <label for="modalGuestPhone">Mobile Number *</label>
+          <input type="tel" id="modalGuestPhone" name="phone" class="input" placeholder="10-digit mobile number" required>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="modalCheckIn">Check-in</label>
+            <input type="date" id="modalCheckIn" name="checkin" class="input">
+          </div>
+          <div class="field">
+            <label for="modalCheckOut">Check-out</label>
+            <input type="date" id="modalCheckOut" name="checkout" class="input">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="modalGuestsCount">Group Size</label>
+          <select id="modalGuestsCount" name="guests" class="input">
+            <option value="4-6 Guests">4 - 6 Guests</option>
+            <option value="7-10 Guests">7 - 10 Guests</option>
+            <option value="11-15 Guests" selected>11 - 15 Guests</option>
+            <option value="16-20 Guests">16 - 20 Guests</option>
+            <option value="20+ Guests">20+ Guests</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="modalGuestNote">Message (Optional)</label>
+          <textarea id="modalGuestNote" name="notes" class="input textarea" style="min-height:76px;" placeholder="Preferred dates, celebration details, questions..."></textarea>
+        </div>
+
+        <div id="modalBookingAlert" class="form-alert" role="alert"></div>
+
+        <button type="submit" class="btn btn-primary btn-block">
+          <span>Check Availability</span>
+        </button>
+      </form>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+  initDateConstraints();
+
+  const closeModal = () => {
+    modal.classList.remove("is-open");
+    document.body.style.overflow = "";
+  };
+
+  modal.querySelector("#closeModalBtn").addEventListener("click", closeModal);
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) closeModal();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal.classList.contains("is-open")) {
+      closeModal();
+    }
+  });
+
+  bindEnquiryForm(modal.querySelector("#modalBookingForm"), {
+    nameId: "modalGuestName",
+    phoneId: "modalGuestPhone",
+    checkinId: "modalCheckIn",
+    checkoutId: "modalCheckOut",
+    guestsId: "modalGuestsCount",
+    notesId: "modalGuestNote",
+    villaInputId: "modalVillaNameInput",
+    alertId: "modalBookingAlert"
+  });
+
+  return modal;
+}
+
+window.openQuickEnquiry = function (villaId) {
+  const villa = VILLAS_DATA.find((v) => v.id === villaId);
   if (!villa) return;
 
-  const modalAlert = document.getElementById("modalBookingAlert");
-  hideInlineAlert(modalAlert);
+  const modal = ensureBookingModal();
+  hideFormAlert(document.getElementById("modalBookingAlert"));
 
   document.getElementById("modalVillaTitle").textContent = villa.name;
   document.getElementById("modalVillaSubtitle").textContent = `${villa.highlight} • ${villa.location}`;
   document.getElementById("modalVillaNameInput").value = villa.name;
 
-  const modalSpecsContainer = document.getElementById("modalVillaSpecs");
-  if (modalSpecsContainer) {
-    modalSpecsContainer.innerHTML = `
-      <div style="background: rgba(255,255,255,0.03); padding: 14px; border-radius: 8px; margin-bottom: 18px; border: 1px solid var(--border-light);">
-        <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 10px;">${villa.description}</p>
-        <div style="display: flex; flex-wrap: wrap; gap: 6px;">
-          ${villa.amenities.map(a => `<span class="amenity-chip"><i class="fas fa-check" style="color:var(--accent-gold);"></i> ${a}</span>`).join("")}
-        </div>
-      </div>
-    `;
-  }
-
-  const checkinInput = document.getElementById("modalCheckIn");
-  if (checkinInput) {
-    checkinInput.min = getTodayISO();
-  }
-
-  modal.classList.add("active");
+  modal.classList.add("is-open");
   document.body.style.overflow = "hidden";
-}
+  document.getElementById("modalGuestName").focus();
+};
 
 /* --------------------------------------------------------------------------
-   Quick Search Form (Hero Banner)
+   Hero Quick Availability Search Bar
    -------------------------------------------------------------------------- */
 function initSearchForm() {
-  const searchForm = document.getElementById("heroSearchForm");
-  if (!searchForm) return;
+  const form = document.getElementById("heroSearchForm");
+  if (!form) return;
 
-  const searchAlert = document.getElementById("heroSearchAlert");
+  const alertEl = document.getElementById("heroSearchAlert");
 
-  searchForm.addEventListener("submit", (e) => {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
-    hideInlineAlert(searchAlert);
+    hideFormAlert(alertEl);
 
     const location = document.getElementById("searchLocation").value;
     const checkin = document.getElementById("searchCheckIn").value;
@@ -644,26 +579,171 @@ function initSearchForm() {
     const guests = document.getElementById("searchGuests").value;
 
     if (checkin && checkout && checkout <= checkin) {
-      showInlineAlert(searchAlert, "Check-out date must be after the check-in date.");
+      showFormAlert(alertEl, "Check-out date must be after the check-in date.", "error");
       return;
     }
 
     const message =
-`*CHECK VILLA AVAILABILITY*
-━━━━━━━━━━━━━━━━━━
-📍 *Location:* ${location}
-📅 *Dates:* ${checkin || "Flexible"} to ${checkout || "Flexible"}
-👥 *Group Size:* ${guests}
-━━━━━━━━━━━━━━━━━━
-Looking for best available luxury private pool villas.`;
+      `Hello VaishnaviStays, I would like to check availability:\n` +
+      `Destination: ${location}\n` +
+      `Dates: ${checkin || "Flexible"} to ${checkout || "Flexible"}\n` +
+      `Guests: ${guests}`;
 
-    const waUrl = `${WHATSAPP_BASE}?text=${encodeURIComponent(message)}`;
+    const waUrl = `${SITE_CONFIG.whatsappBase}?text=${encodeURIComponent(message)}`;
     window.open(waUrl, "_blank", "noopener,noreferrer");
   });
 }
 
 /* --------------------------------------------------------------------------
-   Interactive Gallery & Lightbox (Fixed for filtered state + keyboard nav)
+   Production Form Submission (Validation, Honeypot, Netlify POST + WhatsApp)
+   -------------------------------------------------------------------------- */
+function initEnquiryForms() {
+  const contactForm = document.getElementById("contactPageForm");
+  if (contactForm) {
+    bindEnquiryForm(contactForm, {
+      nameId: "contactName",
+      phoneId: "contactPhone",
+      emailId: "contactEmail",
+      villaSelectId: "contactVillaSelect",
+      checkinId: "contactCheckIn",
+      guestsId: "contactGuests",
+      notesId: "contactMessage",
+      alertId: "contactFormAlert"
+    });
+  }
+
+  const detailForm = document.getElementById("villaDetailForm");
+  if (detailForm) {
+    bindEnquiryForm(detailForm, {
+      nameId: "detailName",
+      phoneId: "detailPhone",
+      emailId: "detailEmail",
+      checkinId: "detailCheckIn",
+      checkoutId: "detailCheckOut",
+      guestsId: "detailGuests",
+      notesId: "detailNotes",
+      alertId: "detailFormAlert"
+    });
+  }
+}
+
+function bindEnquiryForm(form, cfg) {
+  const alertEl = document.getElementById(cfg.alertId);
+  const submitBtn = form.querySelector('button[type="submit"]');
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    hideFormAlert(alertEl);
+
+    // Honeypot anti-spam check
+    const botField = form.querySelector('input[name="bot-field"]');
+    if (botField && botField.value.trim() !== "") {
+      return;
+    }
+
+    const name = document.getElementById(cfg.nameId)?.value.trim() || "";
+    const phone = document.getElementById(cfg.phoneId)?.value.trim() || "";
+    const email = cfg.emailId ? (document.getElementById(cfg.emailId)?.value.trim() || "") : "";
+    const villa =
+      (cfg.villaSelectId && document.getElementById(cfg.villaSelectId)?.value) ||
+      (cfg.villaInputId && document.getElementById(cfg.villaInputId)?.value) ||
+      form.querySelector('input[name="villa"]')?.value ||
+      "Any Villa";
+    const checkin = cfg.checkinId ? (document.getElementById(cfg.checkinId)?.value || "") : "";
+    const checkout = cfg.checkoutId ? (document.getElementById(cfg.checkoutId)?.value || "") : "";
+    const guests = cfg.guestsId ? (document.getElementById(cfg.guestsId)?.value || "") : "";
+    const notes = cfg.notesId ? (document.getElementById(cfg.notesId)?.value.trim() || "") : "";
+
+    if (!name) {
+      showFormAlert(alertEl, "Please enter your full name.", "error");
+      document.getElementById(cfg.nameId)?.focus();
+      return;
+    }
+
+    if (!isValidIndianPhone(phone)) {
+      showFormAlert(alertEl, "Please enter a valid 10-digit mobile number.", "error");
+      document.getElementById(cfg.phoneId)?.focus();
+      return;
+    }
+
+    if (email && !isValidEmail(email)) {
+      showFormAlert(alertEl, "Please enter a valid email address or leave email blank.", "error");
+      document.getElementById(cfg.emailId)?.focus();
+      return;
+    }
+
+    if (checkin && checkout && checkout <= checkin) {
+      showFormAlert(alertEl, "Check-out date must be after check-in date.", "error");
+      document.getElementById(cfg.checkoutId)?.focus();
+      return;
+    }
+
+    const waText =
+      `New Villa Enquiry - VaishnaviStays\n` +
+      `Name: ${name}\n` +
+      `Mobile: ${phone}\n` +
+      (email ? `Email: ${email}\n` : "") +
+      `Villa: ${villa}\n` +
+      `Check-in: ${checkin || "Flexible"}\n` +
+      (checkout ? `Check-out: ${checkout}\n` : "") +
+      `Guests: ${guests || "Not specified"}\n` +
+      `Notes: ${notes || "Interested in availability and tariff."}`;
+
+    const waUrl = `${SITE_CONFIG.whatsappBase}?text=${encodeURIComponent(waText)}`;
+
+    // Loading state
+    const originalBtnHtml = submitBtn ? submitBtn.innerHTML : "";
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.setAttribute("aria-busy", "true");
+      submitBtn.textContent = "Submitting Enquiry...";
+    }
+
+    let netlifyDelivered = false;
+    const isLocalHost =
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1" ||
+      window.location.protocol === "file:";
+
+    if (!isLocalHost) {
+      try {
+        const body = new URLSearchParams(new FormData(form)).toString();
+        const response = await fetch("/", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body
+        });
+        netlifyDelivered = response.ok;
+      } catch {
+        netlifyDelivered = false;
+      }
+    }
+
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.removeAttribute("aria-busy");
+      submitBtn.innerHTML = originalBtnHtml;
+    }
+
+    if (netlifyDelivered) {
+      showFormAlert(
+        alertEl,
+        `Thank you, ${escapeHtml(name)}. Your enquiry has been submitted to our booking desk. <a href="${waUrl}" target="_blank" rel="noopener noreferrer">Also send via WhatsApp (${SITE_CONFIG.phone})</a> for instant confirmation.`,
+        "success"
+      );
+      form.reset();
+    } else {
+      showFormAlert(
+        alertEl,
+        `Your enquiry details are validated and ready. <a href="${waUrl}" target="_blank" rel="noopener noreferrer">Send directly via WhatsApp (${SITE_CONFIG.formattedPhone})</a> or call <a href="${SITE_CONFIG.telHref}">${SITE_CONFIG.formattedPhone}</a> for immediate assistance.`,
+        "info"
+      );
+    }
+  });
+}
+
+/* --------------------------------------------------------------------------
+   Photo Gallery & Accessible Lightbox
    -------------------------------------------------------------------------- */
 let activeLightboxIndex = 0;
 let currentGalleryItems = [...GALLERY_ITEMS];
@@ -682,31 +762,37 @@ function initGallery() {
 
   function renderGallery(items) {
     currentGalleryItems = items;
-    galleryGrid.innerHTML = items.map((item, index) => `
-      <div class="gallery-item" role="button" tabindex="0" aria-label="View ${item.title}" onclick="openLightbox(${index})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(${index});}">
-        <img src="${item.img}" alt="${item.title}" class="gallery-img" loading="lazy">
-        <div class="gallery-overlay">
-          <div class="gallery-zoom-icon"><i class="fas fa-search-plus"></i></div>
-          <h4 class="gallery-title">${item.title}</h4>
-          <span class="gallery-category">${item.categoryLabel}</span>
+    galleryGrid.innerHTML = items
+      .map(
+        (item, index) => `
+      <div class="gallery-card" role="button" tabindex="0" aria-label="Open photo: ${escapeHtml(item.title)}" onclick="openLightbox(${index})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(${index});}">
+        ${renderPictureHtml(item, "gallery-card__img", item.title)}
+        <div class="gallery-card__caption">
+          <span class="gallery-card__cat">${escapeHtml(item.categoryLabel)}</span>
+          <h3 class="gallery-card__title">${escapeHtml(item.title)}</h3>
         </div>
       </div>
-    `).join("");
+    `
+      )
+      .join("");
   }
 
   renderGallery(GALLERY_ITEMS);
 
-  filterBtns.forEach(btn => {
+  filterBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
-      filterBtns.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      const category = btn.getAttribute("data-category");
+      filterBtns.forEach((b) => {
+        b.classList.remove("is-active");
+        b.setAttribute("aria-pressed", "false");
+      });
+      btn.classList.add("is-active");
+      btn.setAttribute("aria-pressed", "true");
 
+      const category = btn.getAttribute("data-category");
       if (category === "all") {
         renderGallery(GALLERY_ITEMS);
       } else {
-        const filtered = GALLERY_ITEMS.filter(item => item.category === category);
-        renderGallery(filtered);
+        renderGallery(GALLERY_ITEMS.filter((item) => item.category === category));
       }
     });
   });
@@ -715,20 +801,21 @@ function initGallery() {
     if (!lightbox || currentGalleryItems.length === 0) return;
     activeLightboxIndex = Math.max(0, Math.min(index, currentGalleryItems.length - 1));
     updateLightbox();
-    lightbox.classList.add("active");
+    lightbox.classList.add("is-open");
     document.body.style.overflow = "hidden";
+    closeBtn && closeBtn.focus();
   };
 
   function closeLightbox() {
     if (!lightbox) return;
-    lightbox.classList.remove("active");
+    lightbox.classList.remove("is-open");
     document.body.style.overflow = "";
   }
 
   function updateLightbox() {
     const item = currentGalleryItems[activeLightboxIndex];
     if (!item) return;
-    lightboxImg.src = item.img;
+    lightboxImg.src = item.webp || item.jpg;
     lightboxImg.alt = item.title;
     lightboxCaption.textContent = item.title;
   }
@@ -749,12 +836,13 @@ function initGallery() {
   nextBtn && nextBtn.addEventListener("click", showNext);
   prevBtn && prevBtn.addEventListener("click", showPrev);
 
-  lightbox && lightbox.addEventListener("click", (e) => {
-    if (e.target === lightbox) closeLightbox();
-  });
+  lightbox &&
+    lightbox.addEventListener("click", (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
 
   document.addEventListener("keydown", (e) => {
-    if (!lightbox || !lightbox.classList.contains("active")) return;
+    if (!lightbox || !lightbox.classList.contains("is-open")) return;
     if (e.key === "Escape") closeLightbox();
     if (e.key === "ArrowRight") showNext();
     if (e.key === "ArrowLeft") showPrev();
@@ -762,30 +850,30 @@ function initGallery() {
 }
 
 /* --------------------------------------------------------------------------
-   FAQ Accordion
+   Accessible FAQ Accordion
    -------------------------------------------------------------------------- */
 function initFaqAccordion() {
   const faqItems = document.querySelectorAll(".faq-item");
 
-  faqItems.forEach(item => {
+  faqItems.forEach((item) => {
     const question = item.querySelector(".faq-question");
     if (!question) return;
 
     question.setAttribute("role", "button");
     question.setAttribute("tabindex", "0");
-    question.setAttribute("aria-expanded", item.classList.contains("active") ? "true" : "false");
+    question.setAttribute("aria-expanded", item.classList.contains("is-open") ? "true" : "false");
 
     const toggleItem = () => {
-      const isActive = item.classList.contains("active");
+      const isOpen = item.classList.contains("is-open");
 
-      faqItems.forEach(other => {
-        other.classList.remove("active");
-        const otherQ = other.querySelector(".faq-question");
-        otherQ && otherQ.setAttribute("aria-expanded", "false");
+      faqItems.forEach((other) => {
+        other.classList.remove("is-open");
+        const q = other.querySelector(".faq-question");
+        q && q.setAttribute("aria-expanded", "false");
       });
 
-      if (!isActive) {
-        item.classList.add("active");
+      if (!isOpen) {
+        item.classList.add("is-open");
         question.setAttribute("aria-expanded", "true");
       }
     };
@@ -801,67 +889,27 @@ function initFaqAccordion() {
 }
 
 /* --------------------------------------------------------------------------
-   Contact Us Form Handler
+   Subtle Entrance Reveal (Respects prefers-reduced-motion)
    -------------------------------------------------------------------------- */
-function initContactForm() {
-  const contactForm = document.getElementById("contactPageForm");
-  if (!contactForm) return;
+function initSubtleReveal() {
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const targets = document.querySelectorAll("[data-reveal]");
+  if (prefersReduced || !("IntersectionObserver" in window)) {
+    targets.forEach((el) => el.classList.add("is-revealed"));
+    return;
+  }
 
-  const errorBox = document.getElementById("contactAlertError");
-  const successBox = document.getElementById("contactAlertSuccess");
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-revealed");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
 
-  contactForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    hideInlineAlert(errorBox);
-    if (successBox) successBox.style.display = "none";
-
-    const name = document.getElementById("contactName").value.trim();
-    const phone = document.getElementById("contactPhone").value.trim();
-    const email = document.getElementById("contactEmail").value.trim();
-    const villa = document.getElementById("contactVillaSelect").value;
-    const checkin = document.getElementById("contactCheckIn").value;
-    const guests = document.getElementById("contactGuests").value;
-    const message = document.getElementById("contactMessage").value.trim();
-
-    if (!name) {
-      showInlineAlert(errorBox, "Please enter your full name.");
-      document.getElementById("contactName").focus();
-      return;
-    }
-
-    if (!isValidIndianPhone(phone)) {
-      showInlineAlert(errorBox, "Please enter a valid 10-digit mobile number.");
-      document.getElementById("contactPhone").focus();
-      return;
-    }
-
-    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      showInlineAlert(errorBox, "Please enter a valid email address or leave the email field blank.");
-      document.getElementById("contactEmail").focus();
-      return;
-    }
-
-    const formattedMessage =
-`*NEW INQUIRY - VAISHNAVI STAYS*
-━━━━━━━━━━━━━━━━━━
-👤 *Full Name:* ${name}
-📞 *Mobile:* ${phone}
-📧 *Email:* ${email || "Not specified"}
-🏡 *Villa Requested:* ${villa}
-📅 *Check-in Date:* ${checkin || "Flexible"}
-👥 *Total Guests:* ${guests}
-💬 *Message:* ${message || "Interested in booking details"}
-━━━━━━━━━━━━━━━━━━
-Looking forward to prompt assistance.`;
-
-    const waUrl = `${WHATSAPP_BASE}?text=${encodeURIComponent(formattedMessage)}`;
-    window.open(waUrl, "_blank", "noopener,noreferrer");
-
-    if (successBox) {
-      successBox.innerHTML = `✅ Your inquiry has been prepared! <a href="${waUrl}" target="_blank" rel="noopener noreferrer" style="color: var(--accent-gold); text-decoration: underline; font-weight: 600;">Click here to open WhatsApp</a> if it didn't open automatically.`;
-      successBox.style.display = "block";
-      successBox.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    }
-    contactForm.reset();
-  });
+  targets.forEach((el) => observer.observe(el));
 }
