@@ -133,7 +133,7 @@ const VILLAS_DATA = [
     location: "Khandala",
     tagline: "5-star villa with large illuminated private pool & lawn",
     description:
-      "Set in Khandala, this architectural retreat centers around an illuminated private swimming pool, timber sun loungers, and manicured green lawn — suited for milestone gatherings, corporate offsites, and luxury weekend escapes.",
+      "Set in Khandala, this upscale retreat centers around an illuminated private swimming pool, timber sun loungers, and manicured green lawn — suited for family gatherings, celebrations, and luxury weekend escapes.",
     specs: {
       accommodation: "Luxury AC Suites",
       pool: "Large Private Pool",

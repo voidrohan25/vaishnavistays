@@ -339,6 +339,22 @@ function initVillaDetailPage() {
                 ${villa.amenities.map((a) => `<li>${ICONS.check}<span>${escapeHtml(a)}</span></li>`).join("")}
               </ul>
 
+              <h2 class="sub-heading">Check-in, Check-out &amp; Directions</h2>
+              <div class="villa-detail__specs-grid">
+                <div class="spec-tile">
+                  <span class="spec-tile__label">Location &amp; Access</span>
+                  <strong class="spec-tile__value">${escapeHtml(villa.location)}, Maharashtra (Mumbai–Pune Expressway)</strong>
+                </div>
+                <div class="spec-tile">
+                  <span class="spec-tile__label">Check-in / Check-out</span>
+                  <strong class="spec-tile__value">Confirmed per property upon booking</strong>
+                </div>
+                <div class="spec-tile">
+                  <span class="spec-tile__label">Directions &amp; Pin</span>
+                  <strong class="spec-tile__value">Exact address shared upon confirmation</strong>
+                </div>
+              </div>
+
               <div class="villa-detail__quick-ctas">
                 <a href="${SITE_CONFIG.telHref}" class="btn btn-outline">
                   ${ICONS.phone}<span>Call ${SITE_CONFIG.formattedPhone}</span>
